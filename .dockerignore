@@ -1,0 +1,5 @@
+_site
+.git
+.gitignore
+Jenkinsfile
+k8s.yaml
