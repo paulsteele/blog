@@ -58,4 +58,4 @@ spec:
               containerPort: 80
       imagePullPolicy: Always
       imagePullSecrets:
-- name: registry.paul-steele.com
+        - name: registry.paul-steele.com
