@@ -15,6 +15,8 @@
 # in the templates via {{ site.myvariable }}.
 title: The Blog of Paul Steele
 email: paul_steele@live.com
+name: Paul Steele
+words_per_minute: 200
 description: >- # this means to ignore newlines until "baseurl:"
   Ponderings of a developing human.
 defaults: 
@@ -28,6 +30,16 @@ defaults:
       author_profile: true
       read_time: true
       share: true
+      header:
+        image: /assets/images/header.jpg
+  - scope:
+      path: ""
+      type: pages
+    values:
+      author: Paul Steele
+      author_profile: true
+      header:
+        image: /assets/images/header.jpg
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: steele_paul
@@ -36,9 +48,11 @@ github_username:  paulsteele
 # Build settings
 markdown: kramdown
 theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: air
 plugins:
   - jekyll-feed
 
+include: [_pages]
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.

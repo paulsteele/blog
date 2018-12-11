@@ -1,6 +1,8 @@
 Paul Steele:
   name: "Paul Steele"
+  avatar: "/assets/images/bio.jpg"
   bio: "Ponderings of a developing human."
+  location: Carmel, Indiana
   links:
-    - label: "Email"
+    - label: "paul_steele@live.com"
       url: "mailto:paul_steele@live.com"

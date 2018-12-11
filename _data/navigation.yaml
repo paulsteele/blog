@@ -1,0 +1,8 @@
+# main links
+main:
+  - title: "Tech"
+    url: /tech/
+  - title: "Life"
+    url: /life/
+  - title: "About"
+    url: /about/
