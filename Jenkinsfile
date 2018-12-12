@@ -33,11 +33,11 @@ volumes: [
 
       stage('Deploy') {
         container('envsubst') {
-          withEnvironment(["BUILD_TAG=$tag"]) {
+          withEnv(["BUILD_TAG=$tag"]) {
             sh "envsubst < k8s.template.yaml > k8s.yaml"
           }
         }
-        
+
         container('kubectl') {
           sh "kubectl apply -f ./k8s.yaml"
         }
