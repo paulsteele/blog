@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
         - name: blog
-          image: registry.paul-steele.com/blog:latest
+          image: registry.paul-steele.com/blog:$BUILD_TAG
           ports:
             - name: blog
               containerPort: 80
