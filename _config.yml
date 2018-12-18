@@ -41,7 +41,7 @@ defaults:
       header:
         image: /assets/images/header.jpg
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://blog.paul-steele.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: steele_paul
 github_username:  paulsteele
 
@@ -51,6 +51,11 @@ theme: minimal-mistakes-jekyll
 minimal_mistakes_skin: air
 plugins:
   - jekyll-feed
+
+feed:
+  categories:
+    - tech
+    - life
 
 include: [_pages]
 # Exclude from processing.

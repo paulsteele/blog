@@ -2,7 +2,7 @@
 layout: single
 title:  "When Errors are Promises"
 date:   2017-10-13 00:20:00 -0500
-categories: tech
+category: tech
 ---
 Under what circumstances will the following code end up logging the rejected promise message to the console?
 ```javascript

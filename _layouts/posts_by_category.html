@@ -21,3 +21,6 @@ layout: archive
     <a href="#page-title" class="back-to-top">{{ site.data.ui-text[site.locale].back_to_top | default: 'Back to Top' }} &uarr;</a>
   </section>
 {% endfor %}
+{% if page.category %}
+<h5><a href="/feed/{{page.category}}.xml">Feed</a></h5>
+{% endif %}
