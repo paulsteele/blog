@@ -71,4 +71,7 @@ exclude:
   - vendor/ruby/
   - Dockerfile
   - k8s.yaml
+  - k8s.template.yaml
   - Jenkinsfile
+  - .dockerignore
+  - .gitignore
