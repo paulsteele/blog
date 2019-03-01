@@ -24,7 +24,7 @@ Everything was working great and I could control my devices. So I should have pr
 
 Around a year ago I upgraded to an Intel NUC as I wanted to host more containers for various other services (this blog for example). As part of that I wanted to toy around with orchestrating everything with [Kubernetes](https://kubernetes.io/). I had some experience with it at work and even though a single node, bare metal environment isn't what it's suited for, I still wanted to give it a whirl.
 
-_Cue several weekends of banging my head against Kubernetes documation_
+_Cue several weekends of banging my head against Kubernetes documentation_
 
 After a couple weeks I had most of what I wanted set up. All of the new services that I wanted running were behaving satisfactorily. I had one issue though, Home Assistant, the first service that started me down the path of running containers, wasn't playing so nicely with Kubernetes. The main problem was there is no direct equivalent to the `--device` flag (See a related [GitHub Issue](https://github.com/kubernetes/kubernetes/issues/5607)). There was a workaround that did make everything seem alright. On the pod container configuration, under `securityContext` if `privileged` was set to `true` the container could mount devices successfully.
 ```
