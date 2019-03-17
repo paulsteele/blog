@@ -5,7 +5,7 @@ date:   2019-02-11 19:50:00 -0500
 category: life
 ---
 
-So it's been a little over a month since I [ditched Plex]({{ site.baseurl }}{% link _posts/2019-01-12-before-and-after-plex.md %}) in favor of [Subsonic](http://www.subsonic.org/pages/index.jsp), and I've started to get the hang of things. I was initially a little skeptical if I would like the service enough to fork out for the [premium](http://www.subsonic.org/pages/premium.jsp) version or not. With a 30 day free trial I didn't have much to lose however. 
+So it's been a little over a month since I [ditched Plex]({{ site.baseurl }}{% link _posts/2019/01/2019-01-12-before-and-after-plex.md %}) in favor of [Subsonic](http://www.subsonic.org/pages/index.jsp), and I've started to get the hang of things. I was initially a little skeptical if I would like the service enough to fork out for the [premium](http://www.subsonic.org/pages/premium.jsp) version or not. With a 30 day free trial I didn't have much to lose however. 
 
 There wasn't an official docker image, unlike Plex, so I went with the one provided by [mbirth](https://hub.docker.com/r/mbirth/subsonic/) which works well enough. As an aside, Kubernetes and Docker made trying this out super simple. I left around my old Plex configs for a couple of days until I was satisfied that Subsonic would work. I was able to modify my volume mounts without having to move any of my actual media and Subsonic picked up on it right away.
 
