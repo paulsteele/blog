@@ -23,7 +23,7 @@ The console will look like
 ```
 Promise Rejected. reason = 'Rejected Promise'
 ```
-Now the naming of catch makes it seem like it should also handle errors! If `foo` looks like
+Now the naming of catch makes it seem like it should also handle errors. If `foo` looks like
 
 ```javascript
 const foo = () => {
