@@ -9,7 +9,7 @@ properties([
 
 podTemplate(label: label, serviceAccount: 'deployments', containers: [
   containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
-  containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.8.8', command: 'cat', ttyEnabled: true),
+  containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.15.0', command: 'cat', ttyEnabled: true),
   containerTemplate(name: 'envsubst', image: 'loicmahieu/alpine-envsubst', command: 'cat', ttyEnabled: true)
 ],
 volumes: [
