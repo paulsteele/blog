@@ -18,7 +18,7 @@ ENV LANGUAGE en_US.UTF-8
 
 WORKDIR /blog
 
-RUN gem install bundler
+RUN gem install bundler:1.17.1
 
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
