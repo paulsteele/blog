@@ -4,9 +4,9 @@ Paul Steele:
   bio: "Ponderings of a developing human."
   location: Carmel, Indiana
   links:
-    - label: "paul_steele@live.com"
+    - label: "paul@paul-steele.com"
       icon: "fas fa-fw fa-envelope"
-      url: "mailto:paul_steele@live.com"
+      url: "mailto:paul@paul-steele.com"
     - label: paulsteele
       icon: "fab fa-fw fa-github"
       url: "https://github.com/paulsteele"
