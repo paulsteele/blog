@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
+    external-dns.alpha.kubernetes.io/hostname: blog.paul-steele.com
+    external-dns.alpha.kubernetes.io/target: "paulsteelehome.duckdns.org"
   name: blog
   namespace: deployments
 spec:
