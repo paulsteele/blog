@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: article
 title:  "Indy Cloud Conf 2019"
 date:   2019-04-21 20:30:00 -0500
 category: tech

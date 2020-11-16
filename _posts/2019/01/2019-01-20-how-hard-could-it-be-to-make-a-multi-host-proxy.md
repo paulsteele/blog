@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: article
 title:  "How hard could it be to make a multi host Postgres proxy?"
 date:   2019-01-20 15:30:00 -0500
 category: tech

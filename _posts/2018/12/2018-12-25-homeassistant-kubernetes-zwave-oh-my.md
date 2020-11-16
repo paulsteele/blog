@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: article
 title:  "Home Assistant, and Kubernetes, and Z-Wave, Oh My!"
 date:   2018-12-25 17:00:01 -0500
 category: tech

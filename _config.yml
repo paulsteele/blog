@@ -1,56 +1,135 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-title: The Blog of Paul Steele
-email: paul@paul-steele.com
-name: Paul Steele
-words_per_minute: 200
-description: >- # this means to ignore newlines until "baseurl:"
+theme: jekyll-text-theme # Gem-based Jekyll Themes
+# remote_theme: kitian616/jekyll-TeXt-theme # Jekyll Remote Theme, see https://github.com/benbalter/jekyll-remote-theme for more information.
+## => Site Settings
+##############################
+text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
+highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
+url     : 'https://blog.paul-steele.com'
+baseurl : ''
+title   : The Blog of Paul Steele
+description: >-
   Ponderings of a developing human.
-defaults: 
-  # _posts
+
+## => Language and Timezone
+##############################
+lang: 'en'
+timezone: 'America/Indiana/Indianapolis'
+
+## => Author and Social
+##############################
+author:
+  type      : # "person" (default), "organization"
+  name      : Paul Steele
+  url       :
+  avatar    : '/assets/images/bio.jpg' # path or url of avatar image (square)
+  bio       : Ponderings of a developing human
+  email     : paul@paul-steele.com
+  facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
+  twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
+  weibo     : # "user_id"   the last part of your profile url, e.g. https://www.weibo.com/user_id/profile?...
+  googleplus: # "user_id"   the last part of your profile url, e.g. https://plus.google.com/u/0/user_id
+  telegram  : # "user_name" the last part of your profile url, e.g. https://t.me/user_name
+  medium    : # "user_name" the last part of your profile url, e.g. https://medium.com/user_name
+  zhihu     : # "user_name" the last part of your profile url, e.g. https://www.zhihu.com/people/user_name
+  douban    : # "user_name" the last part of your profile url, e.g. https://www.douban.com/people/user_name
+  linkedin  : # "user_name" the last part of your profile url, e.g. https://www.linkedin.com/in/user_name
+  github    : paulsteele # "user_name" the last part of your profile url, e.g. https://github.com/user_name
+  npm       : # "user_name" the last part of your profile url, e.g. https://www.npmjs.com/~user_name
+
+## => Paths
+##############################
+paths:
+  root    : # title link url, "/" (default)
+  home    : # home layout url, "/" (default)
+  archive : # "/archive.html" (default)
+  rss     : # "/feed.xml" (default)
+
+
+## => Post
+##############################
+## excerpt
+excerpt_separator: <!--more-->
+
+## license
+license: CC-BY-NC-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4.0"
+
+## TOC
+toc:
+  selectors: # "h1,h2,h3" (default)
+
+## => Markdown Enhancements
+##############################
+## Mathjax
+mathjax: # false (default), true
+mathjax_autoNumber: # false (default), true
+
+## Mermaid
+mermaid: # false (default), true
+
+## Chart
+chart: # false (default), true
+
+
+## => Paginate
+##############################
+paginate: 8
+paginate_path: /page:num # don't change this unless for special need
+
+## => Sources
+##############################
+sources: # bootcdn (default), unpkg
+
+## => Sharing
+##############################
+sharing:
+  provider: false # false (default), "addtoany", "addthis", "custom"
+
+  ## AddThis
+  addthis:
+    id: # AddThis pubid, e.g. ra-5xxxxxxxxxxx
+
+
+## => Search
+##############################
+search:
+  provider: false # "default" (default), false, "google", "custom"
+## => Build
+##############################
+markdown    : kramdown
+highlighter : rouge
+permalink   : date
+
+exclude:
+  - CHANGELOG.md
+  - HOW_TO_RELEASE.md
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README-*.md
+  - README.md
+  - gulpfile.js
+  - jekyll-text-theme.gemspec
+  - package-lock.json
+  - package.json
+  - /docs
+  - /node_modules
+  - /screenshots
+  - /test
+  - /vendor
+
+defaults:
   - scope:
       path: ""
       type: posts
     values:
-      layout: single
-      author: Paul Steele
-      author_profile: true
-      read_time: true
-      share: true
-      header:
-        image: /assets/images/header.jpg
-  - scope:
-      path: ""
-      type: pages
-    values:
-      author: Paul Steele
-      author_profile: true
-      header:
-        image: /assets/images/header.jpg
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://blog.paul-steele.com" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: steele_paul
-github_username:  paulsteele
-
-# Build settings
-markdown: kramdown
-theme: minimal-mistakes-jekyll
-minimal_mistakes_skin: air
-plugins:
-  - jekyll-feed
+      layout: article
+      sharing: true
+      license: true
+      aside:
+        toc: true
+      show_edit_on_github: false
+      show_subscribe: true
+      pageview: true
 
 feed:
   categories:
@@ -58,21 +137,10 @@ feed:
     - life
     - planet
 
-include: [_pages]
-# Exclude from processing.
-# The following items will not be processed, by default. Create a custom list
-# to override the default setting.
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - Dockerfile
-  - k8s.yaml
-  - k8s.template.yaml
-  - Jenkinsfile
-  - .dockerignore
-  - .gitignore
+## => Plugins
+##############################
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jemoji

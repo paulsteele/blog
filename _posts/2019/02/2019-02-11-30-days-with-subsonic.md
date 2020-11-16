@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: article
 title:  "30 Days with Subsonic"
 date:   2019-02-11 19:50:00 -0500
 category: life

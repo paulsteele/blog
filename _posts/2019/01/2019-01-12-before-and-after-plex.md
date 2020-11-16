@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: article
 title:  "Before and After Plex"
 date:   2019-01-12 13:00:00 -0500
 category: life
