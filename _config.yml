@@ -2,7 +2,7 @@ theme: jekyll-text-theme # Gem-based Jekyll Themes
 # remote_theme: kitian616/jekyll-TeXt-theme # Jekyll Remote Theme, see https://github.com/benbalter/jekyll-remote-theme for more information.
 ## => Site Settings
 ##############################
-text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
+text_skin: darkblue # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 url     : 'https://blog.paul-steele.com'
 baseurl : ''
@@ -18,23 +18,12 @@ timezone: 'America/Indiana/Indianapolis'
 ## => Author and Social
 ##############################
 author:
-  type      : # "person" (default), "organization"
   name      : Paul Steele
-  url       :
-  avatar    : '/assets/images/bio.jpg' # path or url of avatar image (square)
+  avatar    : 'assets/images/bio.jpg'
   bio       : Ponderings of a developing human
   email     : paul@paul-steele.com
-  facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
-  twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
-  weibo     : # "user_id"   the last part of your profile url, e.g. https://www.weibo.com/user_id/profile?...
-  googleplus: # "user_id"   the last part of your profile url, e.g. https://plus.google.com/u/0/user_id
-  telegram  : # "user_name" the last part of your profile url, e.g. https://t.me/user_name
-  medium    : # "user_name" the last part of your profile url, e.g. https://medium.com/user_name
-  zhihu     : # "user_name" the last part of your profile url, e.g. https://www.zhihu.com/people/user_name
-  douban    : # "user_name" the last part of your profile url, e.g. https://www.douban.com/people/user_name
-  linkedin  : # "user_name" the last part of your profile url, e.g. https://www.linkedin.com/in/user_name
-  github    : paulsteele # "user_name" the last part of your profile url, e.g. https://github.com/user_name
-  npm       : # "user_name" the last part of your profile url, e.g. https://www.npmjs.com/~user_name
+  linkedin  : paultsteele
+  github    : paulsteele
 
 ## => Paths
 ##############################
@@ -124,12 +113,13 @@ defaults:
     values:
       layout: article
       sharing: true
-      license: true
+      license: false
       aside:
         toc: true
       show_edit_on_github: false
       show_subscribe: true
-      pageview: true
+      pageview: false
+      show_author_profile: true
 
 feed:
   categories:

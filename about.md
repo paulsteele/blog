@@ -2,7 +2,6 @@
 layout: article
 title: About
 key: page-about
-permalink: /about/
 ---
 I'm Paul Steele, a software engineer based out of the Indianapolis area. 
 I'm currently interested in automation of all kinds, whether that be continuous integration pipelines, or home automation.
