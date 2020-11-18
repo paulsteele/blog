@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/paulsteele/jekyll-TeXt-theme.git
-  revision: 1800272a2ead08d4fbdf30d5237c7d7c78406994
-  ref: 1800272a2ead08d4fbdf30d5237c7d7c78406994
+  revision: 166e62fe2204e13c07c05ea47442e44adb00dbad
+  ref: 166e62fe2204e13c07c05ea47442e44adb00dbad
   specs:
     jekyll-text-theme (2.2.6)
       jekyll (>= 3.6, < 5.0)
