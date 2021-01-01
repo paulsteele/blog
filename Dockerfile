@@ -1,4 +1,4 @@
-FROM ruby as builder
+FROM ruby:2.7.2-buster as builder
 
 # Install program to configure locales
 # if error on host run echo N | sudo tee /sys/module/overlay/parameters/metacopy
