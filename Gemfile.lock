@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/paulsteele/jekyll-TeXt-theme.git
+  remote: https://github.com/paulsteele/jekyll-TeXt-theme.git
   revision: 166e62fe2204e13c07c05ea47442e44adb00dbad
   ref: 166e62fe2204e13c07c05ea47442e44adb00dbad
   specs:
