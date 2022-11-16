@@ -1,0 +1,9 @@
+{{- define "content" -}}
+
+<div>
+    <h1>{{ .Title }}</h1>
+    {{ partial "postcard/layout.html" (dict "pages" .Pages.ByPublishDate.Reverse "ctx" .) }}
+    <a href="{{ .RelPermalink }}index.xml">Feed</a>
+</div>
+
+{{- end -}}
