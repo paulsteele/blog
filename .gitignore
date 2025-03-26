@@ -488,4 +488,5 @@ tags
 .aider*
 !.aiderignore
 
-.idea
+# Ignore entire .idea directory
+.idea/
