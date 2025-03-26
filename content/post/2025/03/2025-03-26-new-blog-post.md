@@ -2,8 +2,11 @@
 title: "New Blog Post"
 date: 2025-03-26T00:00:00-04:00
 draft: true
+categories:
+  - "Hour a Day: AI"
 tags:
   - blog
+  - ai
 ---
 
 Write your blog post content here.

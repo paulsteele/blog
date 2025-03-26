@@ -26,11 +26,17 @@ url = "/categories/devlog"
 parent = "categories"
 weight = 12
 [[menu.navbar]]
+identifier = "category_houraday"
+name = "Hour a Day: AI"
+url = "/categories/hour-a-day-ai"
+parent = "categories"
+weight = 13
+[[menu.navbar]]
 identifier = "category_life"
 name = "Life"
 url = "/categories/life"
 parent = "categories"
-weight = 13
+weight = 14
 [[menu.navbar]]
 identifier = "about"
 name = "about"
