@@ -486,3 +486,6 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/jekyll,ruby,rubymine,vim,latex
 .aider*
+!.aiderignore
+
+.idea
