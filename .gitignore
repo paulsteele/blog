@@ -490,3 +490,5 @@ tags
 
 # Ignore entire .idea directory
 .idea/
+public
+resources/_gen

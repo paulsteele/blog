@@ -1,4 +1,4 @@
-FROM klakegg/hugo:0.101.0-onbuild AS hugo
+FROM hugomods/hugo:reg-node-lts-0.131.0 AS hugo
 
 FROM nginx
 COPY --from=hugo /target /usr/share/nginx/html
