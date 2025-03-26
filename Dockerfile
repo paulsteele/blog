@@ -1,4 +1,7 @@
 FROM hugomods/hugo:base-131.0 AS hugo
+WORKDIR /src
+COPY . .
+RUN hugo --minify
 
 FROM nginx
-COPY --from=hugo /target /usr/share/nginx/html
+COPY --from=hugo /src/public /usr/share/nginx/html
