@@ -1,4 +1,244 @@
 ---
+title: "Hour a Day: AI - Day 1 - The Blog"
+date: 2025-03-27T00:00:00-04:00
+categories:
+  - "Hour a Day: AI"
+tags:
+  - ai
+---
+
+The last year has been filled with moments of me oscillating between being dismissive and absolutely terrified by how AI tools will affect the software development industry. Over the last couple months I've gotten my feet wet but I figured why not ramp it up a notch? I'm going to try to spend an hour a day exploring these tools for the next year and record my successes and failures. At worst at the end of the year I've spent a lot more time on personal projects. So let's get into it!
+at the moment my tools of choice are
+* credits on [openrouter](https://openrouter.ai/)
+* [Claude Sonnet 3.7](https://www.anthropic.com/claude/sonnet)
+* [Aider](https://aider.chat/)
+
+# Day 1 - Beefing up the ol' Blog
+
+What better place to start than getting this blog updated? (Wow I've really been slacking recently). 
+
+## Clean up git
+I noticed that I had some files git thought needing staging. That shouldn't be the case as I'm just getting started! I looked and saw it was for my editor.
+
+Prompt:
+```
+can you remove the .idea folder from my git tracked files, but still leave them on the underlying filesystem?
+```
+
+Response:
+
+`````
+you'll need to run the following commands to remove the `.idea` folder from git tracking while keeping it on your filesystem:
+
+```bash
+git rm -r --cached .idea
+git commit -m "Remove .idea directory from git tracking"
+```
+
+This will:
+1. Remove the `.idea` directory from git tracking (--cached means it won't delete the actual files)
+2. Commit this change to your repository
+`````
+
+Verdict: ✅ Got it right! and saved me looking at a man page :)
+
+## Get the blog building
+
+I hadn't run the server on this computer yet so I wanted to see if it could install the dependencies for me.
+
+Prompt: 
+```
+great, can you get the blog running locally for me?
+```
+
+Response:
+
+````
+I'll help you get the blog running locally. Based on the files in your repository, it appears you're using Hugo for your blog. To run it locally, we need to make sure Hugo is installed and then start the local server.
+
+Since I don't need to make any changes to your existing files, I'll just provide the commands to get your blog running:
+
+```bash
+hugo server -D
+```
+
+This command will start a local development server with draft posts enabled. The `-D` flag includes draft posts in the local preview.
+
+If you don't have Hugo installed yet, you'll need to install it first:
+
+```bash
+sudo apt-get install hugo
+```
+
+Or if you prefer using snap:
+
+```bash
+sudo snap install hugo
+```
+
+````
+
+Verdict: ❌ It's definitely close, but I'm on [tumblweed](https://get.opensuse.org/tumbleweed/) so `apt-get` wouldn't be right. The response was close though! I feel like that one was a bit unfair so I installed the packages manually through yast for now.
+
+## The blog didn't build?
+
+I ran the run command and was met with a "Page not found" error? :panic:
+
+Prompt: 
+```
+I've got the server running, but when I navigate to the localhost:1313 it just says "page not found"
+```
+
+Response:
+
+````
+I need to investigate why your Hugo site is showing "page not found". This could be due to several reasons:
+
+1. Missing theme
+2. Configuration issues in config.toml
+3. Missing index template
+
+Could you please add the following files to the chat so I can diagnose the issue:
+
+1. `config.toml` - This contains your site configuration
+2. Any files in the `layouts/_default/` directory, especially `single.html`, `list.html`, and `baseof.html`
+3. Any files in the `themes/` directory (or at least tell me which theme you're using)
+
+Once I have this information, I can help fix the issue.
+
+> Tokens: 6.2k sent, 139 received. Cost: $0.02 message, $0.07 session.
+> config.toml
+> Add file to the chat? (Y)es/(N)o/(D)on't ask again [Yes]: y
+
+I see you've shared your `config.toml` file. Looking at it, I can see you're using the "hugo-theme-monochrome" theme. The "page not found" error is likely because the theme is missing or not properly installed.
+
+Let's check if the theme is installed and install it if needed:
+
+```bash
+ls -la themes/hugo-theme-monochrome
+```
+````
+
+Verdict: ✅ Right again, I incorrectly clone the repo since it's been so long!
+
+## Let's get building
+
+With the submodule installed I tried building and got actual compilation issues this time. So I asked my pair for help!
+
+Prompt:
+
+```
+can you run the hugo server for me and suggest fixes for the errors it encounters?
+```
+
+Response:
+
+````
+I'll help fix the errors in your Hugo site. The main issue is that the theme is trying to use Google Analytics templates that are no longer available in the current Hugo version.
+
+To fix this, I need to see the content of the theme's head.html file. Please run this command and share the output:
+
+```bash
+cat themes/hugo-theme-monochrome/layouts/partials/head.html
+```
+
+Once I see that file, I can provide the proper SEARCH/REPLACE blocks to fix the issue.
+
+> Tokens: 8.6k sent, 102 received. Cost: $0.03 message, $0.17 session.
+> cat themes/hugo-theme-monochrome/layouts/partials/head.html
+> Run shell command? (Y)es/(N)o/(D)on't ask again [Yes]: y
+> Running cat themes/hugo-theme-monochrome/layouts/partials/head.html
+> Add command output to the chat? (Y)es/(N)o/(D)on't ask again [Yes]: y
+> Added 52 lines of output to the chat.
+
+#### can you fix the error?
+
+I'll fix the error in your Hugo site. The issue is that the theme is trying to use the Google Analytics template that's no longer available in the current Hugo version.
+
+Let's create a custom Google Analytics template to replace the missing one:
+
+layouts/_internal/google_analytics_async.html
+```
+<<<<<<< SEARCH
+=======
+{{ with .Site.GoogleAnalytics }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '{{ . }}');
+</script>
+{{ end }}
+>>>>>>> REPLACE
+```
+
+Now, let's modify the theme's head.html file to use the GA code from your config:
+
+themes/hugo-theme-monochrome/layouts/partials/head.html
+```
+<<<<<<< SEARCH
+    {{ if (.Scratch.Get "params").ga_code }}
+        {{ template "_internal/google_analytics_async.html" . }}
+    {{ end }}
+=======
+    {{ if .Site.GoogleAnalytics }}
+        {{ template "_internal/google_analytics_async.html" . }}
+    {{ end }}
+>>>>>>> REPLACE
+```
+
+After applying these changes, run the Hugo server again:
+````
+
+Verdict: ❌ What it suggested might have worked, but it missed the point. What I really needed to do was update my hugo theme to be one that didn't contain references to a removed hugo feature. Thankfully I didn't have any breaking changes and the site was building!
+
+## One last step 
+
+Everything was building, but I want these posts on their own category like my dev logs (which I think this series will help immensely!)
+
+Prompt: 
+
+```
+for the blog post for today's date, can you change the category to "Hour a Day: AI" and make sure generating feeds and having a selector works for that?  
+```
+
+Response:
+
+````
+To change the category for today's blog post and ensure feed generation and category selection works, I'll need to examine and potentially modify these files:
+
+1. `content/post/2025/03/2025-03-26-new-blog-post.md` - To change the category in the front matter
+2. `layouts/_default/rss.xml` - To check/modify feed generation
+3. Possibly `config.toml` - To ensure the new category is properly configured
+
+Could you please add these files to the chat so I can see their current content and make the necessary changes?
+
+> Tokens: 3.1k sent, 118 received. Cost: $0.01 message, $0.43 session.  
+> config.toml  
+> Add file to the chat? (Y)es/(N)o/(A)ll/(S)kip all/(D)on't ask again [Yes]: y  
+> content/post/2025/03/2025-03-26-new-blog-post.md  
+> Add file to the chat? (Y)es/(N)o/(A)ll/(S)kip all/(D)on't ask again [Yes]: y  
+> layouts/_default/rss.xml  
+> Add file to the chat? (Y)es/(N)o/(A)ll/(S)kip all/(D)on't ask again [Yes]: y  
+
+I'll make the necessary changes to implement the "Hour a Day: AI" category and ensure it works with feeds and selectors. Here are the changes:
+
+1. First, let's update the blog post to include the new category:
+
+content/post/2025/03/2025-03-26-new-blog-post.md
+```markdown
+<<<<<<< SEARCH
+---
+title: "New Blog Post"
+date: 2025-03-26T00:00:00-04:00
+draft: true
+tags:
+  - blog
+---
+=======
+---
 title: "New Blog Post"
 date: 2025-03-26T00:00:00-04:00
 draft: true
@@ -8,19 +248,63 @@ tags:
   - blog
   - ai
 ---
+>>>>>>> REPLACE
+```
 
-Write your blog post content here.
+2. Now, let's add the new category to the navigation menu in config.toml:
 
-<!--more-->
+config.toml
+```toml
+<<<<<<< SEARCH
+[[menu.navbar]]
+identifier = "category_devlog"
+name = "Dev Log"
+url = "/categories/devlog"
+parent = "categories"
+weight = 12
+[[menu.navbar]]
+identifier = "category_life"
+name = "Life"
+url = "/categories/life"
+parent = "categories"
+weight = 13
+=======
+[[menu.navbar]]
+identifier = "category_devlog"
+name = "Dev Log"
+url = "/categories/devlog"
+parent = "categories"
+weight = 12
+[[menu.navbar]]
+identifier = "category_houraday"
+name = "Hour a Day: AI"
+url = "/categories/hour-a-day-ai"
+parent = "categories"
+weight = 13
+[[menu.navbar]]
+identifier = "category_life"
+name = "Life"
+url = "/categories/life"
+parent = "categories"
+weight = 14
+>>>>>>> REPLACE
+```
 
-## Introduction
+The RSS feed template looks good as is - it will automatically include the new category since it's using the site's regular pages.
 
-This is where you can start writing your blog post.
+After applying these changes, you'll have:
+1. Added the "Hour a Day: AI" category to your blog post
+2. Added an AI tag to the post
+3. Added the new category to your navigation menu
+4. The RSS feed will automatically include the new category
 
-## Main Content
+To test these changes, you can run Hugo's server:
 
-Add your main content here.
+```bash
+hugo server -D
+```
+````
 
-## Conclusion
+Verdict: ✅ I was really surprised by this one, I didn't think I gave it nearly enough context to figure out how to do this. Especially since I added the theme to the `.aiderignore` file.
 
-Wrap up your thoughts here.
+Pretty good for day 1 eh?
