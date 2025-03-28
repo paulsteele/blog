@@ -492,3 +492,5 @@ tags
 .idea/
 public
 resources/_gen
+bin
+obj
