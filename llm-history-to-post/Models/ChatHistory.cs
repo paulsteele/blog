@@ -1,11 +1,17 @@
 namespace LlmHistoryToPost.Models;
 
+public class ChatHistory
+{
+	public List<ChatSession> Sessions { get; set; } = new();
+	public Dictionary<DateOnly, List<PromptResponsePair>> PromptsByDay { get; set; } = new();
+}
+
 public class ChatSession
 {
-	public DateTime Date { get; set; }
-	public List<PromptResponsePair> Conversations { get; set; } = new();
+	public DateTime StartTime { get; set; }
+	public List<PromptResponsePair> PromptResponsePairs { get; set; } = new();
 	
-	public string FormattedDate => Date.ToString("yyyy-MM-dd");
+	public string FormattedDate => StartTime.ToString("yyyy-MM-dd");
 }
 
 public class PromptResponsePair
@@ -15,7 +21,13 @@ public class PromptResponsePair
 	public bool? IsSuccess { get; set; }
 	public string UserComment { get; set; } = string.Empty;
 	
-	public string PromptPreview => Prompt.Length <= 100 
-		? Prompt 
-		: Prompt.Substring(0, 97) + "...";
+	public string GetPromptPreview(int maxLength = 100)
+	{
+		if (Prompt.Length <= maxLength)
+		{
+			return Prompt;
+		}
+		
+		return Prompt.Substring(0, maxLength - 3) + "...";
+	}
 }
