@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>LlmHistoryToPost</RootNamespace>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <AssemblyName>llm-history-to-post</AssemblyName>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>LlmHistoryToPost</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>llm-history-to-post</AssemblyName>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.47.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Spectre.Console" Version="0.47.0"/>
+    </ItemGroup>
 
 </Project>
