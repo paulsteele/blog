@@ -3,10 +3,10 @@ namespace LlmHistoryToPost.Services;
 using System.Text.RegularExpressions;
 using LlmHistoryToPost.Models;
 
-public class ChatHistoryParser
+public partial class ChatHistoryParser
 {
-	private static readonly Regex SessionStartRegex = new(@"# aider chat started at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", RegexOptions.Compiled);
-	private static readonly Regex UserPromptRegex = new(@"^####\s+(.+)$", RegexOptions.Compiled | RegexOptions.Multiline);
+	private static readonly Regex SessionStartRegex = AiderChatRegex();
+	private static readonly Regex UserPromptRegex = UserRegex();
 	
 	public ChatHistory ParseHistoryFile(string filePath)
 	{
@@ -87,4 +87,9 @@ public class ChatHistoryParser
 			session.PromptResponsePairs.Add(pair);
 		}
 	}
+
+    [GeneratedRegex(@"# aider chat started at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", RegexOptions.Compiled)]
+    private static partial Regex AiderChatRegex();
+    [GeneratedRegex(@"^####\s+(.+)$", RegexOptions.Multiline | RegexOptions.Compiled)]
+    private static partial Regex UserRegex();
 }

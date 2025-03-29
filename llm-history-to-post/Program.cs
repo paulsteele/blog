@@ -1,16 +1,16 @@
 namespace LlmHistoryToPost;
 
-using LlmHistoryToPost.Services;
+using Services;
 using Spectre.Console;
 
-public class Program
+public static class Program
 {
 	public static void Main(string[] args)
 	{
 		try
 		{
 			// Get the input file path
-			string inputFilePath = GetInputFilePath(args);
+			var inputFilePath = GetInputFilePath(args);
 			
 			// Parse the chat history
 			var parser = new ChatHistoryParser();
@@ -68,12 +68,6 @@ public class Program
 	
 	private static string GetInputFilePath(string[] args)
 	{
-		if (args.Length > 0)
-		{
-			return args[0];
-		}
-		
-		// Default to the current directory
-		return Path.Combine(Directory.GetCurrentDirectory(), ".aider.chat.history.md");
+		return args.Length > 0 ? args[0] : Path.Combine(Directory.GetCurrentDirectory(), ".aider.chat.history.md");
 	}
 }
