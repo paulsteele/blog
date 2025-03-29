@@ -2,7 +2,8 @@
 
 ## High Level Goal
 
-llm-history-to-post is an application that parses LLM chat logs and creates blog post templates based on user input, following the
+llm-history-to-post is an application that parses LLM chat logs and creates blog post templates based on user input,
+following the
 format seen in the example blog post.
 
 ## Detailed Requirements
@@ -18,9 +19,10 @@ format seen in the example blog post.
 
 - Parse a ".aider.chat.history.md" file into an in-memory collection of user prompts and LLM responses
 - The file format contains sections with:
-  - User prompts prefixed with "####"
-  - LLM responses are the gaps in-between prompts
-- Group these prompt-response pairs by day based on timestamps in the file. Each line won't have a timestamp but there will be section headings like "# aider chat started at 2025-03-26 19:18:06"
+    - User prompts prefixed with "####"
+    - LLM responses are the gaps in-between prompts
+- Group these prompt-response pairs by day based on timestamps in the file. Each line won't have a timestamp but there
+  will be section headings like "# aider chat started at 2025-03-26 19:18:06"
 - Each day should be identified by a date in the format YYYY-MM-DD
 
 ### Day Selection
@@ -40,24 +42,24 @@ format seen in the example blog post.
 ### Verdict Collection
 
 - For each selected prompt-response pair:
-  - Display the full prompt and response to the user
-  - Ask if the verdict was "pass" or "failure" with a simple prompt: "Was this a success? (Y/N)"
-  - Store the verdict with the prompt-response pair
+    - Display the full prompt and response to the user
+    - Ask if the verdict was "pass" or "failure" with a simple prompt: "Was this a success? (Y/N)"
+    - Store the verdict with the prompt-response pair
 - Format verdicts in the blog post as:
-  - Success: "Verdict: ✅ [user comment]"
-  - Failure: "Verdict: ❌ [user comment]"
+    - Success: "Verdict: ✅ [user comment]"
+    - Failure: "Verdict: ❌ [user comment]"
 
 ### Blog Post Generation
 
 - Use a template similar to the example blog post (2025-03-27-hadai-day-1.md)
 - Include:
-  - YAML frontmatter with title, date, categories, and tags
-  - Introduction section (can be static or prompt user for input)
-  - Selected prompt-response pairs formatted as in the example:
-    - Prompt in a blockquote with "> Prompt:" prefix
-    - Response in a blockquote with "> Response:" prefix
-    - Verdict with emoji (✅/❌) and user comment
-  - Conclusion section (can be static or prompt user for input)
+    - YAML frontmatter with title, date, categories, and tags
+    - Introduction section (can be static or prompt user for input)
+    - Selected prompt-response pairs formatted as in the example:
+        - Prompt in a blockquote with "> Prompt:" prefix
+        - Response in a blockquote with "> Response:" prefix
+        - Verdict with emoji (✅/❌) and user comment
+    - Conclusion section (can be static or prompt user for input)
 - Generate the post as a Markdown file with naming convention: YYYY-MM-DD-hadai-day-N.md
 - Save to the specified output directory or current directory
 
