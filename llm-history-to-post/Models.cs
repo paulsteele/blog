@@ -6,16 +6,16 @@ namespace LlmHistoryToPost
 {
     public class Conversation
     {
-        public string Prompt { get; set; }
-        public string Response { get; set; }
+        public string Prompt { get; set; } = string.Empty;
+        public string Response { get; set; } = string.Empty;
         public DateTime Timestamp { get; set; }
-        public Verdict Verdict { get; set; }
+        public Verdict? Verdict { get; set; }
     }
 
     public class Verdict
     {
         public bool IsSuccess { get; set; }
-        public string Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         public override string ToString()
         {
