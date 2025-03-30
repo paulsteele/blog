@@ -64,38 +64,53 @@ public partial class ChatHistoryParser
 	
 	private void ParsePromptResponsePairs(string sessionContent, ChatSession session)
 	{
-		// First, replace consecutive prompt lines with a single prompt
-		var processedContent = ConsecutivePromptLinesRegex.Replace(sessionContent, match => 
-		{
-			// Join all the captured prompt lines with newlines
-			var lines = match.Value.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-			var combinedPrompt = string.Join("\n", lines);
-			return combinedPrompt;
-		});
-		
-		var promptMatches = UserPromptRegex.Matches(processedContent);
+		var promptMatches = UserPromptRegex.Matches(sessionContent);
 		
 		for (int i = 0; i < promptMatches.Count; i++)
 		{
-			var promptMatch = promptMatches[i];
-			var prompt = promptMatch.Groups[1].Value.Trim();
+			var currentMatch = promptMatches[i];
+			var currentPromptLine = currentMatch.Groups[1].Value.Trim();
+			var combinedPrompt = new List<string> { currentPromptLine };
+			
+			// Check if this is part of a multi-line prompt
+			int j = i + 1;
+			while (j < promptMatches.Count && 
+				   IsConsecutivePrompt(sessionContent, currentMatch, promptMatches[j]))
+			{
+				combinedPrompt.Add(promptMatches[j].Groups[1].Value.Trim());
+				i = j; // Skip this match in the outer loop
+				j++;
+			}
 			
 			// Determine the response (text between this prompt and the next one)
-			int responseStartIndex = promptMatch.Index + promptMatch.Length;
+			int responseStartIndex = currentMatch.Index + currentMatch.Length;
 			int responseEndIndex = (i < promptMatches.Count - 1) 
 				? promptMatches[i + 1].Index 
-				: processedContent.Length;
+				: sessionContent.Length;
 			
-			var response = processedContent.Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
+			var response = sessionContent.Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
 			
 			var pair = new PromptResponsePair
 			{
-				Prompt = prompt,
+				Prompt = string.Join("\n", combinedPrompt),
 				Response = response
 			};
 			
 			session.PromptResponsePairs.Add(pair);
 		}
+	}
+	
+	private bool IsConsecutivePrompt(string content, Match current, Match next)
+	{
+		// Calculate the text between the end of the current match and the start of the next match
+		int endOfCurrentLine = current.Index + current.Length;
+		int startOfNextMatch = next.Index;
+		
+		// Extract the text between the two matches
+		string textBetween = content.Substring(endOfCurrentLine, startOfNextMatch - endOfCurrentLine);
+		
+		// If there are only newlines and whitespace between matches, they're consecutive
+		return textBetween.Trim().Length == 0;
 	}
 
     [GeneratedRegex(@"# aider chat started at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", RegexOptions.Compiled)]
