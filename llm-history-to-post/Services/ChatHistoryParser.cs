@@ -68,24 +68,31 @@ public partial class ChatHistoryParser
 		
 		for (int i = 0; i < promptMatches.Count; i++)
 		{
-			var currentMatch = promptMatches[i];
-			var currentPromptLine = currentMatch.Groups[1].Value.Trim();
-			var combinedPrompt = new List<string> { currentPromptLine };
+			// Start of a new prompt group
+			var startMatch = promptMatches[i];
+			var combinedPrompt = new List<string> { startMatch.Groups[1].Value.Trim() };
 			
-			// Check if this is part of a multi-line prompt
-			int j = i + 1;
-			while (j < promptMatches.Count && 
-				   IsConsecutivePrompt(sessionContent, currentMatch, promptMatches[j]))
+			// Find the end of this prompt group (all consecutive #### lines)
+			int lastPromptIndex = i;
+			for (int j = i + 1; j < promptMatches.Count; j++)
 			{
-				combinedPrompt.Add(promptMatches[j].Groups[1].Value.Trim());
-				i = j; // Skip this match in the outer loop
-				j++;
+				// Check if there's only whitespace between this prompt and the previous one
+				if (IsConsecutivePrompt(sessionContent, promptMatches[j-1], promptMatches[j]))
+				{
+					combinedPrompt.Add(promptMatches[j].Groups[1].Value.Trim());
+					lastPromptIndex = j;
+				}
+				else
+				{
+					break;
+				}
 			}
 			
-			// Determine the response (text between this prompt and the next one)
-			int responseStartIndex = currentMatch.Index + currentMatch.Length;
-			int responseEndIndex = (i < promptMatches.Count - 1) 
-				? promptMatches[i + 1].Index 
+			// Determine the response (text between the last prompt line and the next prompt group)
+			var lastPromptMatch = promptMatches[lastPromptIndex];
+			int responseStartIndex = lastPromptMatch.Index + lastPromptMatch.Length;
+			int responseEndIndex = (lastPromptIndex < promptMatches.Count - 1) 
+				? promptMatches[lastPromptIndex + 1].Index 
 				: sessionContent.Length;
 			
 			var response = sessionContent.Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
@@ -97,6 +104,9 @@ public partial class ChatHistoryParser
 			};
 			
 			session.PromptResponsePairs.Add(pair);
+			
+			// Skip to the end of this prompt group
+			i = lastPromptIndex;
 		}
 	}
 	
