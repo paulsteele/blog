@@ -7,6 +7,7 @@ public partial class ChatHistoryParser
 {
 	private static readonly Regex SessionStartRegex = AiderChatRegex();
 	private static readonly Regex UserPromptRegex = UserRegex();
+	private static readonly Regex ConsecutivePromptLinesRegex = ConsecutivePromptRegex();
 	
 	public ChatHistory ParseHistoryFile(string filePath)
 	{
@@ -63,7 +64,16 @@ public partial class ChatHistoryParser
 	
 	private void ParsePromptResponsePairs(string sessionContent, ChatSession session)
 	{
-		var promptMatches = UserPromptRegex.Matches(sessionContent);
+		// First, replace consecutive prompt lines with a single prompt
+		var processedContent = ConsecutivePromptLinesRegex.Replace(sessionContent, match => 
+		{
+			// Join all the captured prompt lines with newlines
+			var lines = match.Value.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+			var combinedPrompt = string.Join("\n", lines);
+			return combinedPrompt;
+		});
+		
+		var promptMatches = UserPromptRegex.Matches(processedContent);
 		
 		for (int i = 0; i < promptMatches.Count; i++)
 		{
@@ -74,9 +84,9 @@ public partial class ChatHistoryParser
 			int responseStartIndex = promptMatch.Index + promptMatch.Length;
 			int responseEndIndex = (i < promptMatches.Count - 1) 
 				? promptMatches[i + 1].Index 
-				: sessionContent.Length;
+				: processedContent.Length;
 			
-			var response = sessionContent.Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
+			var response = processedContent.Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
 			
 			var pair = new PromptResponsePair
 			{
@@ -92,4 +102,6 @@ public partial class ChatHistoryParser
     private static partial Regex AiderChatRegex();
     [GeneratedRegex(@"^####\s+(.+)$", RegexOptions.Multiline | RegexOptions.Compiled)]
     private static partial Regex UserRegex();
+    [GeneratedRegex(@"(^####\s+.+$\n)+", RegexOptions.Multiline | RegexOptions.Compiled)]
+    private static partial Regex ConsecutivePromptRegex();
 }
