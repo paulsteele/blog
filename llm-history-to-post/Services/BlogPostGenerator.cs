@@ -8,28 +8,23 @@ public class BlogPostGenerator
 	public string GenerateBlogPost(
 		DateOnly date, 
 		List<PromptResponsePair> selectedPrompts, 
-		string introduction, 
-		string conclusion,
 		int dayNumber)
 	{
 		var sb = new StringBuilder();
 		
 		// YAML frontmatter
 		sb.AppendLine("---");
-		sb.AppendLine($"title: \"HadAI Day {dayNumber}\"");
-		sb.AppendLine($"date: {date:yyyy-MM-dd}");
+		sb.AppendLine($"title: \"Hour a Day: AI - Day {dayNumber} - \"");
+		sb.AppendLine($"date: {date}");
 		sb.AppendLine("categories:");
-		sb.AppendLine("  - AI");
+		sb.AppendLine("  - Hour a Day: AI");
 		sb.AppendLine("tags:");
-		sb.AppendLine("  - HadAI");
-		sb.AppendLine("  - LLM");
+		sb.AppendLine("  - ai");
 		sb.AppendLine("---");
 		sb.AppendLine();
 		
 		// Introduction
 		sb.AppendLine("## Introduction");
-		sb.AppendLine();
-		sb.AppendLine(introduction);
 		sb.AppendLine();
 		
 		// Prompt-response pairs
@@ -69,7 +64,6 @@ public class BlogPostGenerator
 		// Conclusion
 		sb.AppendLine("## Conclusion");
 		sb.AppendLine();
-		sb.AppendLine(conclusion);
 		
 		return sb.ToString();
 	}
@@ -80,11 +74,11 @@ public class BlogPostGenerator
 		var month = date.Month.ToString("00");
 		var day = date.Day.ToString("00");
 		
-		var directory = Path.Combine("content", "posts", year.ToString(), month);
+		var directory = Path.Combine(Directory.GetParent(".").ToString(), "content", "posts", year.ToString(), month);
 		
 		// Ensure directory exists
 		Directory.CreateDirectory(directory);
 		
-		return Path.Combine(directory, $"{year}-{month}-{day}-hadai-day-{dayNumber}.md");
+		return Path.Combine(directory, $"{year}-{month}-{day}-hadai-day-{dayNumber}-temp.md");
 	}
 }

@@ -37,8 +37,6 @@ public static class Program
 			userInteractionService.CollectVerdicts(selectedPrompts);
 			
 			// Get introduction and conclusion
-			var introduction = userInteractionService.GetIntroduction();
-			var conclusion = userInteractionService.GetConclusion();
 			var dayNumber = userInteractionService.GetDayNumber();
 			
 			// Generate blog post
@@ -46,8 +44,6 @@ public static class Program
 			var blogPostContent = generator.GenerateBlogPost(
 				selectedDay, 
 				selectedPrompts, 
-				introduction, 
-				conclusion,
 				dayNumber);
 			
 			// Save to file
@@ -68,6 +64,6 @@ public static class Program
 	
 	private static string GetInputFilePath(string[] args)
 	{
-		return args.Length > 0 ? args[0] : Path.Combine(Directory.GetCurrentDirectory(), ".aider.chat.history.md");
+		return args.Length > 0 ? args[0] : Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.ToString(), ".aider.chat.history.md");
 	}
 }

@@ -7,7 +7,6 @@ public partial class ChatHistoryParser
 {
 	private static readonly Regex SessionStartRegex = AiderChatRegex();
 	private static readonly Regex UserPromptRegex = UserRegex();
-	private static readonly Regex ConsecutivePromptLinesRegex = ConsecutivePromptRegex();
 	
 	public ChatHistory ParseHistoryFile(string filePath)
 	{
@@ -21,7 +20,7 @@ public partial class ChatHistoryParser
 		
 		// Parse sessions
 		var sessionMatches = SessionStartRegex.Matches(content);
-		for (int i = 0; i < sessionMatches.Count; i++)
+		for (var i = 0; i < sessionMatches.Count; i++)
 		{
 			var sessionMatch = sessionMatches[i];
 			var startTimeStr = sessionMatch.Groups[1].Value;
@@ -33,8 +32,8 @@ public partial class ChatHistoryParser
 			};
 			
 			// Determine the content of this session
-			int startIndex = sessionMatch.Index + sessionMatch.Length;
-			int endIndex = (i < sessionMatches.Count - 1) 
+			var startIndex = sessionMatch.Index + sessionMatch.Length;
+			var endIndex = (i < sessionMatches.Count - 1) 
 				? sessionMatches[i + 1].Index 
 				: content.Length;
 			
@@ -66,15 +65,15 @@ public partial class ChatHistoryParser
 	{
 		var promptMatches = UserPromptRegex.Matches(sessionContent);
 		
-		for (int i = 0; i < promptMatches.Count; i++)
+		for (var i = 0; i < promptMatches.Count; i++)
 		{
 			// Start of a new prompt group
 			var startMatch = promptMatches[i];
 			var combinedPrompt = new List<string> { startMatch.Groups[1].Value.Trim() };
 			
 			// Find the end of this prompt group (all consecutive #### lines)
-			int lastPromptIndex = i;
-			for (int j = i + 1; j < promptMatches.Count; j++)
+			var lastPromptIndex = i;
+			for (var j = i + 1; j < promptMatches.Count; j++)
 			{
 				// Check if there's only whitespace between this prompt and the previous one
 				if (IsConsecutivePrompt(sessionContent, promptMatches[j-1], promptMatches[j]))
@@ -90,8 +89,8 @@ public partial class ChatHistoryParser
 			
 			// Determine the response (text between the last prompt line and the next prompt group)
 			var lastPromptMatch = promptMatches[lastPromptIndex];
-			int responseStartIndex = lastPromptMatch.Index + lastPromptMatch.Length;
-			int responseEndIndex = (lastPromptIndex < promptMatches.Count - 1) 
+			var responseStartIndex = lastPromptMatch.Index + lastPromptMatch.Length;
+			var responseEndIndex = (lastPromptIndex < promptMatches.Count - 1) 
 				? promptMatches[lastPromptIndex + 1].Index 
 				: sessionContent.Length;
 			
@@ -113,11 +112,11 @@ public partial class ChatHistoryParser
 	private bool IsConsecutivePrompt(string content, Match current, Match next)
 	{
 		// Calculate the text between the end of the current match and the start of the next match
-		int endOfCurrentLine = current.Index + current.Length;
-		int startOfNextMatch = next.Index;
+		var endOfCurrentLine = current.Index + current.Length;
+		var startOfNextMatch = next.Index;
 		
 		// Extract the text between the two matches
-		string textBetween = content.Substring(endOfCurrentLine, startOfNextMatch - endOfCurrentLine);
+		var textBetween = content.Substring(endOfCurrentLine, startOfNextMatch - endOfCurrentLine);
 		
 		// If there are only newlines and whitespace between matches, they're consecutive
 		return textBetween.Trim().Length == 0;
@@ -127,6 +126,4 @@ public partial class ChatHistoryParser
     private static partial Regex AiderChatRegex();
     [GeneratedRegex(@"^####\s+(.+)$", RegexOptions.Multiline | RegexOptions.Compiled)]
     private static partial Regex UserRegex();
-    [GeneratedRegex(@"(^####\s+.+$\n)+", RegexOptions.Multiline | RegexOptions.Compiled)]
-    private static partial Regex ConsecutivePromptRegex();
 }

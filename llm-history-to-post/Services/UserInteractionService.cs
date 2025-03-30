@@ -67,16 +67,6 @@ public class UserInteractionService
 		}
 	}
 	
-	public string GetIntroduction()
-	{
-		return AnsiConsole.Ask<string>("Enter an introduction for the blog post:");
-	}
-	
-	public string GetConclusion()
-	{
-		return AnsiConsole.Ask<string>("Enter a conclusion for the blog post:");
-	}
-	
 	public int GetDayNumber()
 	{
 		return AnsiConsole.Ask<int>("Enter the day number for the blog post title:");
