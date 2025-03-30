@@ -17,7 +17,7 @@ public class BlogPostGenerator
 		sb.AppendLine($"title: \"Hour a Day: AI - Day {dayNumber} - \"");
 		sb.AppendLine($"date: {date}");
 		sb.AppendLine("categories:");
-		sb.AppendLine("  - Hour a Day: AI");
+		sb.AppendLine("  - \"Hour a Day: AI\"");
 		sb.AppendLine("tags:");
 		sb.AppendLine("  - ai");
 		sb.AppendLine("---");
@@ -74,7 +74,7 @@ public class BlogPostGenerator
 		var month = date.Month.ToString("00");
 		var day = date.Day.ToString("00");
 		
-		var directory = Path.Combine(Directory.GetParent(".").ToString(), "content", "posts", year.ToString(), month);
+		var directory = Path.Combine(Directory.GetParent(".").ToString(), "content", "post", year.ToString(), month);
 		
 		// Ensure directory exists
 		Directory.CreateDirectory(directory);
