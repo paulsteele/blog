@@ -2,6 +2,6 @@
   <Configurations>
     <Platform Name="Any CPU" />
   </Configurations>
-  <Project Path="src\core.csproj" />
+  <Project Path="core\core.csproj" />
   <Project Path="tests\tests.csproj" />
 </Solution>

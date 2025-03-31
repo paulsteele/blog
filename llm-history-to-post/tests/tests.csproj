@@ -23,11 +23,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\llm-history-to-post\llm-history-to-post.csproj" />
+		<ProjectReference Include="..\core\core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Using Include="Xunit" />
 	</ItemGroup>
-
 </Project>
