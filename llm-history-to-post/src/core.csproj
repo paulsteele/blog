@@ -6,7 +6,7 @@
         <RootNamespace>LlmHistoryToPost</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>llm-history-to-post</AssemblyName>
+        <PackageId>core</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
