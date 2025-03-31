@@ -1,8 +1,9 @@
 namespace LlmHistoryToPost.Tests;
 
+[TestFixture]
 public class UnitTest1
 {
-	[Fact]
+	[Test]
 	public void Test1()
 	{
 		// Arrange
@@ -12,6 +13,6 @@ public class UnitTest1
 		var actual = 1;
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.That(actual, Is.EqualTo(expected));
 	}
 }
