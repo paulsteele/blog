@@ -55,11 +55,7 @@ public static class Program
 		}
 		catch (Exception ex)
 		{
-			AnsiConsole.MarkupLine($"[red]Error: {ex.Message}[/]");
-			if (ex.InnerException != null)
-			{
-				AnsiConsole.MarkupLine($"[red]Inner error: {ex.InnerException.Message}[/]");
-			}
+			AnsiConsole.MarkupLine($"[red]Error: {ex}[/]");
 		}
 	}
 	
