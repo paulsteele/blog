@@ -55,7 +55,8 @@ public static class Program
 		}
 		catch (Exception ex)
 		{
-			AnsiConsole.MarkupLine($"[red]Error: {ex}[/]");
+			AnsiConsole.MarkupLine($"[red]Error: {ex.Message}[/]");
+			AnsiConsole.MarkupLine($"[red]Error: {ex.StackTrace}[/]");
 		}
 	}
 	
