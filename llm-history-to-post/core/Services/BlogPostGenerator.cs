@@ -74,10 +74,7 @@ public class BlogPostGenerator
 		var month = date.Month.ToString("00");
 		var day = date.Day.ToString("00");
 		
-		var directory = Path.Combine(Directory.GetParent(".").ToString(), "content", "post", year.ToString(), month);
-		
-		// Ensure directory exists
-		Directory.CreateDirectory(directory);
+		var directory = FilePathUtility.FindOrCreateBlogPostDirectory(year, month);
 		
 		return Path.Combine(directory, $"{year}-{month}-{day}-hadai-day-{dayNumber}-temp.md");
 	}
