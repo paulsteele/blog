@@ -3,6 +3,7 @@ namespace LlmHistoryToPost.Services;
 using System.Collections.Generic;
 using LlmHistoryToPost.Models;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 
 public class UserInteractionService
 {
@@ -43,7 +44,7 @@ public class UserInteractionService
 				.PageSize(15)
 				.InstructionsText("[grey](Press [blue]<space>[/] to toggle selection, [green]<enter>[/] to confirm)[/]")
 				.AddChoices(Enumerable.Range(0, prompts.Count))
-				.UseConverter(i => $"{i + 1}. {prompts[i].GetPromptPreview()}")
+				.UseConverter(i => $"{i + 1}. {Markup.Escape(prompts[i].GetPromptPreview())}")
 		);
 		
 		return selectedIndices.Select(i => prompts[i]).ToList();
