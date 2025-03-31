@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\llm-history-to-post\llm-history-to-post.csproj" />
+		<ProjectReference Include="..\..\src\llm-history-to-post\llm-history-to-post.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
