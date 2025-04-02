@@ -26,26 +26,26 @@ public class UserInteractionServiceTests
 			{ new DateOnly(2025, 4, 2), [new PromptResponsePair { Prompt = "Test prompt 2" }] }
 		};
 		
-		_testPrompts = new List<PromptResponsePair>
-		{
-			new() { Prompt = "Test prompt 1", Response = "Test response 1" },
-			new() { Prompt = "Test prompt 2", Response = "Test response 2" }
-		};
+		_testPrompts =
+		[
+			new PromptResponsePair { Prompt = "Test prompt 1", Response = "Test response 1" },
+			new PromptResponsePair { Prompt = "Test prompt 2", Response = "Test response 2" }
+		];
 	}
 
 	[Test]
 	public void ShouldReturnDayWhenOnlyOneDayExists()
 	{
-		// Arrange
+		var date = new DateOnly(2025, 4, 1);
+		
 		var singleDayDict = new Dictionary<DateOnly, List<PromptResponsePair>>
 		{
-			{ new DateOnly(2025, 4, 1), new List<PromptResponsePair>() }
+			{ date, [] }
 		};
 
-		// Act & Assert
-		// This test will depend on how you want to handle the console interaction
-		// var result = _service.SelectDay(singleDayDict);
-		// Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 1)));
+		var result = _service.SelectDay(singleDayDict);
+		
+		Assert.That(result, Is.EqualTo(date));
 	}
 
 	[Test]
