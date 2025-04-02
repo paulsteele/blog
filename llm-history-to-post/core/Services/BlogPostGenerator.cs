@@ -16,7 +16,7 @@ public class BlogPostGenerator
 		sb.AppendLine("---");
 		sb.AppendLine($"title: \"Hour a Day: AI - Day {dayNumber} - \"");
 		var now = DateTimeOffset.Now;
-		sb.AppendLine($"date: {now:yyyy-MM-dd}T00:00:00{now:zzz}");
+		sb.AppendLine($"date: {now:yyyy-MM-dd\\T00:00:00zzz}");
 		sb.AppendLine("categories:");
 		sb.AppendLine("  - \"Hour a Day: AI\"");
 		sb.AppendLine("tags:");
