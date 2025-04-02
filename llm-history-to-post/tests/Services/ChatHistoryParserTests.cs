@@ -1,0 +1,132 @@
+namespace LlmHistoryToPost.Tests.Services;
+
+using System.Text.RegularExpressions;
+using LlmHistoryToPost.Models;
+using LlmHistoryToPost.Services;
+using Moq;
+
+[TestFixture]
+public class ChatHistoryParserTests
+{
+	private ChatHistoryParser _parser;
+	private string _testFilePath;
+
+	[SetUp]
+	public void Setup()
+	{
+		_parser = new ChatHistoryParser();
+		_testFilePath = Path.GetTempFileName();
+	}
+
+	[TearDown]
+	public void TearDown()
+	{
+		if (File.Exists(_testFilePath))
+		{
+			File.Delete(_testFilePath);
+		}
+	}
+
+	[Test]
+	public void ParseHistoryFile_FileNotFound_ThrowsFileNotFoundException()
+	{
+		// Arrange
+		var nonExistentFilePath = "non-existent-file.txt";
+
+		// Act & Assert
+		Assert.That(() => _parser.ParseHistoryFile(nonExistentFilePath), 
+			Throws.TypeOf<FileNotFoundException>());
+	}
+
+	[Test]
+	public void ParseHistoryFile_EmptyFile_ReturnsEmptyHistory()
+	{
+		// Arrange
+		File.WriteAllText(_testFilePath, string.Empty);
+
+		// Act
+		var result = _parser.ParseHistoryFile(_testFilePath);
+
+		// Assert
+		Assert.That(result.Sessions, Is.Empty);
+		Assert.That(result.PromptsByDay, Is.Empty);
+	}
+
+	[Test]
+	public void ParseHistoryFile_SingleSession_ParsesCorrectly()
+	{
+		// Arrange
+		// TODO: Create test file content with a single session
+
+		// Act
+		// TODO: Parse the file
+
+		// Assert
+		// TODO: Verify the session was parsed correctly
+	}
+
+	[Test]
+	public void ParseHistoryFile_MultipleSessions_ParsesCorrectly()
+	{
+		// Arrange
+		// TODO: Create test file content with multiple sessions
+
+		// Act
+		// TODO: Parse the file
+
+		// Assert
+		// TODO: Verify all sessions were parsed correctly
+	}
+
+	[Test]
+	public void ParseHistoryFile_GroupsByDay_Correctly()
+	{
+		// Arrange
+		// TODO: Create test file content with sessions from different days
+
+		// Act
+		// TODO: Parse the file
+
+		// Assert
+		// TODO: Verify sessions are grouped by day correctly
+	}
+
+	[Test]
+	public void ParsePromptResponsePairs_SinglePrompt_ParsesCorrectly()
+	{
+		// Arrange
+		// TODO: Create session content with a single prompt-response pair
+
+		// Act
+		// TODO: Parse the prompt-response pairs
+
+		// Assert
+		// TODO: Verify the prompt-response pair was parsed correctly
+	}
+
+	[Test]
+	public void ParsePromptResponsePairs_MultiplePrompts_ParsesCorrectly()
+	{
+		// Arrange
+		// TODO: Create session content with multiple prompt-response pairs
+
+		// Act
+		// TODO: Parse the prompt-response pairs
+
+		// Assert
+		// TODO: Verify all prompt-response pairs were parsed correctly
+	}
+
+	[Test]
+	public void ParsePromptResponsePairs_ConsecutivePrompts_CombinesCorrectly()
+	{
+		// Arrange
+		// TODO: Create session content with consecutive prompts
+
+		// Act
+		// TODO: Parse the prompt-response pairs
+
+		// Assert
+		// TODO: Verify consecutive prompts are combined correctly
+	}
+}
