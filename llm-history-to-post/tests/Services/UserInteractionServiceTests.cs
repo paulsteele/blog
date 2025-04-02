@@ -2,9 +2,6 @@ namespace LlmHistoryToPost.Tests.Services;
 
 using LlmHistoryToPost.Models;
 using LlmHistoryToPost.Services;
-using Moq;
-using Spectre.Console;
-using Spectre.Console.Testing;
 
 [TestFixture]
 public class UserInteractionServiceTests
