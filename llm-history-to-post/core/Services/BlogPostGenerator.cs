@@ -15,7 +15,7 @@ public class BlogPostGenerator
 		// YAML frontmatter
 		sb.AppendLine("---");
 		sb.AppendLine($"title: \"Hour a Day: AI - Day {dayNumber} - \"");
-		sb.AppendLine($"date: {date}");
+		sb.AppendLine($"date: {date:yyyy-MM-dd}T00:00:00-04:00");
 		sb.AppendLine("categories:");
 		sb.AppendLine("  - \"Hour a Day: AI\"");
 		sb.AppendLine("tags:");
