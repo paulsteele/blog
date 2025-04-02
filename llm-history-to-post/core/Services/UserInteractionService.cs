@@ -5,36 +5,28 @@ using LlmHistoryToPost.Models;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 
-public class UserInteractionService
+public class UserInteractionService(IAnsiConsole console)
 {
-	private readonly IAnsiConsole _console;
-
-	public UserInteractionService(IAnsiConsole console)
-	{
-		_console = console ?? throw new ArgumentNullException(nameof(console));
-	}
 	public DateOnly SelectDay(Dictionary<DateOnly, List<PromptResponsePair>> promptsByDay)
 	{
 		var days = promptsByDay.Keys.OrderBy(d => d).ToList();
 		
-		if (days.Count == 0)
+		switch (days.Count)
 		{
-			throw new InvalidOperationException("No days with conversations found in the history file.");
+			case 0:
+				throw new InvalidOperationException("No days with conversations found in the history file.");
+			case 1:
+				console.MarkupLine($"[green]Only one day found: {days[0]}. Automatically selecting it.[/]");
+				return days[0];
+			default:
+				return console.Prompt(
+					new SelectionPrompt<DateOnly>()
+						.Title("Select a day to process:")
+						.PageSize(10)
+						.AddChoices(days)
+						.UseConverter(d => d.ToString("yyyy-MM-dd"))
+				);
 		}
-		
-		if (days.Count == 1)
-		{
-			_console.MarkupLine($"[green]Only one day found: {days[0]}. Automatically selecting it.[/]");
-			return days[0];
-		}
-		
-		return _console.Prompt(
-			new SelectionPrompt<DateOnly>()
-				.Title("Select a day to process:")
-				.PageSize(10)
-				.AddChoices(days)
-				.UseConverter(d => d.ToString("yyyy-MM-dd"))
-		);
 	}
 	
 	public List<PromptResponsePair> SelectPrompts(List<PromptResponsePair> prompts)
@@ -44,7 +36,7 @@ public class UserInteractionService
 			throw new InvalidOperationException("No prompts found for the selected day.");
 		}
 		
-		var selectedIndices = _console.Prompt(
+		var selectedIndices = console.Prompt(
 			new MultiSelectionPrompt<int>()
 				.Title("Select prompts to include in the blog post:")
 				.PageSize(15)
@@ -60,22 +52,22 @@ public class UserInteractionService
 	{
 		foreach (var pair in selectedPrompts)
 		{
-			_console.Clear();
+			console.Clear();
 			
-			_console.MarkupLine("[yellow]===== PROMPT =====[/]");
-			_console.WriteLine(pair.Prompt);
+			console.MarkupLine("[yellow]===== PROMPT =====[/]");
+			console.WriteLine(pair.Prompt);
 			
-			_console.MarkupLine("\n[yellow]===== RESPONSE =====[/]");
-			_console.WriteLine(pair.Response);
+			console.MarkupLine("\n[yellow]===== RESPONSE =====[/]");
+			console.WriteLine(pair.Response);
 			
-			pair.IsSuccess = _console.Confirm("Was this a success?");
+			pair.IsSuccess = console.Confirm("Was this a success?");
 			
-			pair.UserComment = _console.Ask<string>("Enter your comment for this verdict:");
+			pair.UserComment = console.Ask<string>("Enter your comment for this verdict:");
 		}
 	}
 	
 	public int GetDayNumber()
 	{
-		return _console.Ask<int>("Enter the day number for the blog post title:");
+		return console.Ask<int>("Enter the day number for the blog post title:");
 	}
 }
