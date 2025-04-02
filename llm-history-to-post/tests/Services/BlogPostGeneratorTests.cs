@@ -19,23 +19,24 @@ public class BlogPostGeneratorTests
 		_testDate = new DateOnly(2025, 4, 1);
 		_testDayNumber = 7;
 		
-		_testPrompts = new List<PromptResponsePair>
-		{
-			new PromptResponsePair
+		_testPrompts =
+		[
+			new PromptResponsePair()
 			{
 				Prompt = "Test prompt 1",
 				Response = "Test response 1",
 				IsSuccess = true,
 				UserComment = "This worked great"
 			},
-			new PromptResponsePair
+
+			new PromptResponsePair()
 			{
 				Prompt = "Test prompt 2",
 				Response = "Test response 2",
 				IsSuccess = false,
 				UserComment = "This didn't work"
 			}
-		};
+		];
 	}
 
 	[Test]
@@ -83,7 +84,7 @@ public class BlogPostGeneratorTests
 		// Arrange
 		var multilinePrompts = new List<PromptResponsePair>
 		{
-			new PromptResponsePair
+			new()
 			{
 				Prompt = "Line 1\nLine 2\nLine 3",
 				Response = "Response 1\nResponse 2",

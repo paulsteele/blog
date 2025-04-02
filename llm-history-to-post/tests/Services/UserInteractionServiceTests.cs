@@ -18,14 +18,14 @@ public class UserInteractionServiceTests
 		// Initialize test data
 		_testPromptsByDay = new Dictionary<DateOnly, List<PromptResponsePair>>
 		{
-			{ new DateOnly(2025, 4, 1), new List<PromptResponsePair> { new PromptResponsePair { Prompt = "Test prompt 1" } } },
-			{ new DateOnly(2025, 4, 2), new List<PromptResponsePair> { new PromptResponsePair { Prompt = "Test prompt 2" } } }
+			{ new DateOnly(2025, 4, 1), [new PromptResponsePair { Prompt = "Test prompt 1" }] },
+			{ new DateOnly(2025, 4, 2), [new PromptResponsePair { Prompt = "Test prompt 2" }] }
 		};
 		
 		_testPrompts = new List<PromptResponsePair>
 		{
-			new PromptResponsePair { Prompt = "Test prompt 1", Response = "Test response 1" },
-			new PromptResponsePair { Prompt = "Test prompt 2", Response = "Test response 2" }
+			new() { Prompt = "Test prompt 1", Response = "Test response 1" },
+			new() { Prompt = "Test prompt 2", Response = "Test response 2" }
 		};
 	}
 

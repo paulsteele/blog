@@ -1,7 +1,5 @@
 namespace LlmHistoryToPost.Tests.Services;
 
-using LlmHistoryToPost.Services;
-
 [TestFixture]
 public class FilePathUtilityTests
 {
