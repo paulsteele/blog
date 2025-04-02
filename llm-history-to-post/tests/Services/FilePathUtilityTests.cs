@@ -29,7 +29,7 @@ public class FilePathUtilityTests
 	}
 
 	[Test]
-	public void FindFileInDirectoryTree_FileExists_ReturnsFilePath()
+	public void ShouldReturnFilePathWhenFileExists()
 	{
 		// Arrange
 		// Setup in SetUp method
@@ -45,7 +45,7 @@ public class FilePathUtilityTests
 	}
 
 	[Test]
-	public void FindFileInDirectoryTree_FileDoesNotExist_ReturnsNull()
+	public void ShouldReturnNullWhenFileDoesNotExist()
 	{
 		// Arrange
 		// Setup in SetUp method
@@ -59,7 +59,7 @@ public class FilePathUtilityTests
 	}
 
 	[Test]
-	public void FindOrCreateBlogPostDirectory_DirectoryExists_ReturnsPath()
+	public void ShouldReturnPathWhenDirectoryExists()
 	{
 		// Arrange
 		// Create a content/post directory structure
@@ -79,7 +79,7 @@ public class FilePathUtilityTests
 	}
 
 	[Test]
-	public void FindOrCreateBlogPostDirectory_DirectoryDoesNotExist_CreatesAndReturnsPath()
+	public void ShouldCreateAndReturnPathWhenDirectoryDoesNotExist()
 	{
 		// Arrange
 		// Setup in SetUp method

@@ -25,7 +25,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParseHistoryFile_FileNotFound_ThrowsFileNotFoundException()
+	public void ShouldThrowFileNotFoundExceptionWhenFileDoesNotExist()
 	{
 		// Arrange
 		var nonExistentFilePath = "non-existent-file.txt";
@@ -36,7 +36,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParseHistoryFile_EmptyFile_ReturnsEmptyHistory()
+	public void ShouldReturnEmptyHistoryWhenFileIsEmpty()
 	{
 		// Arrange
 		File.WriteAllText(_testFilePath, string.Empty);
@@ -50,7 +50,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParseHistoryFile_SingleSession_ParsesCorrectly()
+	public void ShouldParseCorrectlyWithSingleSession()
 	{
 		// Arrange
 		// TODO: Create test file content with a single session
@@ -63,7 +63,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParseHistoryFile_MultipleSessions_ParsesCorrectly()
+	public void ShouldParseCorrectlyWithMultipleSessions()
 	{
 		// Arrange
 		// TODO: Create test file content with multiple sessions
@@ -76,7 +76,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParseHistoryFile_GroupsByDay_Correctly()
+	public void ShouldGroupSessionsByDayCorrectly()
 	{
 		// Arrange
 		// TODO: Create test file content with sessions from different days
@@ -89,7 +89,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParsePromptResponsePairs_SinglePrompt_ParsesCorrectly()
+	public void ShouldParseSinglePromptResponsePairCorrectly()
 	{
 		// Arrange
 		// TODO: Create session content with a single prompt-response pair
@@ -102,7 +102,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParsePromptResponsePairs_MultiplePrompts_ParsesCorrectly()
+	public void ShouldParseMultiplePromptResponsePairsCorrectly()
 	{
 		// Arrange
 		// TODO: Create session content with multiple prompt-response pairs
@@ -115,7 +115,7 @@ public class ChatHistoryParserTests
 	}
 
 	[Test]
-	public void ParsePromptResponsePairs_ConsecutivePrompts_CombinesCorrectly()
+	public void ShouldCombineConsecutivePromptsCorrectly()
 	{
 		// Arrange
 		// TODO: Create session content with consecutive prompts

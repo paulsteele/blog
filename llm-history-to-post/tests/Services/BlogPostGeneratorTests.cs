@@ -40,7 +40,7 @@ public class BlogPostGeneratorTests
 	}
 
 	[Test]
-	public void GenerateBlogPost_WithValidInputs_GeneratesCorrectMarkdown()
+	public void ShouldGenerateCorrectMarkdownWithValidInputs()
 	{
 		// Arrange
 		// Setup is done in the SetUp method
@@ -61,7 +61,7 @@ public class BlogPostGeneratorTests
 	}
 
 	[Test]
-	public void GenerateBlogPost_WithEmptyPromptList_GeneratesMinimalMarkdown()
+	public void ShouldGenerateMinimalMarkdownWithEmptyPromptList()
 	{
 		// Arrange
 		var emptyPrompts = new List<PromptResponsePair>();
@@ -79,7 +79,7 @@ public class BlogPostGeneratorTests
 	}
 
 	[Test]
-	public void GenerateBlogPost_WithMultilinePromptAndResponse_FormatsCorrectly()
+	public void ShouldFormatMultilinePromptAndResponseCorrectly()
 	{
 		// Arrange
 		var multilinePrompts = new List<PromptResponsePair>
@@ -106,7 +106,7 @@ public class BlogPostGeneratorTests
 	}
 
 	[Test]
-	public void GetOutputFilePath_ReturnsCorrectPath()
+	public void ShouldReturnCorrectOutputFilePath()
 	{
 		// Arrange
 		// Mock FilePathUtility or use a test-specific implementation

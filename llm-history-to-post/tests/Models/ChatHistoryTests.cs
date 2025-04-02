@@ -6,7 +6,7 @@ using LlmHistoryToPost.Models;
 public class ChatHistoryTests
 {
 	[Test]
-	public void ChatHistory_InitialState_HasEmptyCollections()
+	public void ShouldHaveEmptyCollectionsInInitialState()
 	{
 		// Arrange & Act
 		var history = new ChatHistory();
@@ -17,7 +17,7 @@ public class ChatHistoryTests
 	}
 
 	[Test]
-	public void ChatSession_FormattedDate_ReturnsCorrectFormat()
+	public void ShouldReturnCorrectlyFormattedDate()
 	{
 		// Arrange
 		var session = new ChatSession
@@ -33,7 +33,7 @@ public class ChatHistoryTests
 	}
 
 	[Test]
-	public void PromptResponsePair_GetPromptPreview_ShortPrompt_ReturnsFullPrompt()
+	public void ShouldReturnFullPromptWhenPromptIsShort()
 	{
 		// Arrange
 		var pair = new PromptResponsePair
@@ -49,7 +49,7 @@ public class ChatHistoryTests
 	}
 
 	[Test]
-	public void PromptResponsePair_GetPromptPreview_LongPrompt_ReturnsTruncatedPrompt()
+	public void ShouldReturnTruncatedPromptWhenPromptIsLong()
 	{
 		// Arrange
 		var longPrompt = new string('A', 150);
@@ -67,7 +67,7 @@ public class ChatHistoryTests
 	}
 
 	[Test]
-	public void PromptResponsePair_GetPromptPreview_CustomMaxLength_RespectsMaxLength()
+	public void ShouldRespectCustomMaxLengthWhenGettingPromptPreview()
 	{
 		// Arrange
 		var longPrompt = new string('A', 80);

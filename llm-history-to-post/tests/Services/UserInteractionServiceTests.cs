@@ -34,7 +34,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void SelectDay_SingleDay_ReturnsDay()
+	public void ShouldReturnDayWhenOnlyOneDayExists()
 	{
 		// Arrange
 		var singleDayDict = new Dictionary<DateOnly, List<PromptResponsePair>>
@@ -49,7 +49,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void SelectDay_MultipleDays_PromptForSelection()
+	public void ShouldPromptForSelectionWhenMultipleDaysExist()
 	{
 		// Arrange
 		// Setup in SetUp method
@@ -60,7 +60,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void SelectDay_NoDays_ThrowsException()
+	public void ShouldThrowExceptionWhenNoDaysExist()
 	{
 		// Arrange
 		var emptyDict = new Dictionary<DateOnly, List<PromptResponsePair>>();
@@ -71,7 +71,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void SelectPrompts_NoPrompts_ThrowsException()
+	public void ShouldThrowExceptionWhenNoPromptsExist()
 	{
 		// Arrange
 		var emptyList = new List<PromptResponsePair>();
@@ -82,7 +82,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void SelectPrompts_WithPrompts_ReturnsSelectedPrompts()
+	public void ShouldReturnSelectedPromptsWhenPromptsExist()
 	{
 		// Arrange
 		// Setup in SetUp method
@@ -93,7 +93,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void CollectVerdicts_SetsVerdictAndComment()
+	public void ShouldSetVerdictAndCommentWhenCollectingVerdicts()
 	{
 		// Arrange
 		// Setup in SetUp method
@@ -104,7 +104,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void GetDayNumber_ReturnsEnteredNumber()
+	public void ShouldReturnEnteredNumberWhenGettingDayNumber()
 	{
 		// Arrange
 		// Setup in SetUp method
