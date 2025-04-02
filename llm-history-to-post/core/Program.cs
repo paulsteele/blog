@@ -8,6 +8,8 @@ public static class Program
 {
 	public static void Main(string[] args)
 	{
+		var console = AnsiConsole.Create(new AnsiConsoleSettings());
+		
 		try
 		{
 			// Get the input file path
@@ -18,11 +20,11 @@ public static class Program
 			var history = parser.ParseHistoryFile(inputFilePath);
 			
 			// User interactions
-			var userInteractionService = new UserInteractionService();
+			var userInteractionService = new UserInteractionService(console);
 			
 			// Select a day
 			var selectedDay = userInteractionService.SelectDay(history.PromptsByDay);
-			AnsiConsole.MarkupLine($"[green]Selected day: {selectedDay}[/]");
+			console.MarkupLine($"[green]Selected day: {selectedDay}[/]");
 			
 			// Select prompts for that day
 			var promptsForDay = history.PromptsByDay[selectedDay];
@@ -30,7 +32,7 @@ public static class Program
 			
 			if (selectedPrompts.Count == 0)
 			{
-				AnsiConsole.MarkupLine("[red]No prompts selected. Exiting.[/]");
+				console.MarkupLine("[red]No prompts selected. Exiting.[/]");
 				return;
 			}
 			
@@ -51,12 +53,12 @@ public static class Program
 			var outputFilePath = generator.GetOutputFilePath(selectedDay, dayNumber);
 			File.WriteAllText(outputFilePath, blogPostContent);
 			
-			AnsiConsole.MarkupLine($"[green]Blog post generated successfully: {outputFilePath}[/]");
+			console.MarkupLine($"[green]Blog post generated successfully: {outputFilePath}[/]");
 		}
 		catch (Exception ex)
 		{
-			AnsiConsole.MarkupLine($"[red]Error: {ex.Message}[/]");
-			AnsiConsole.MarkupLine($"[red]Error: {ex.StackTrace}[/]");
+			console.MarkupLine($"[red]Error: {ex.Message}[/]");
+			console.MarkupLine($"[red]Error: {ex.StackTrace}[/]");
 		}
 	}
 	

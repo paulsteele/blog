@@ -2,18 +2,22 @@ namespace LlmHistoryToPost.Tests.Services;
 
 using LlmHistoryToPost.Models;
 using LlmHistoryToPost.Services;
+using Moq;
+using Spectre.Console;
 
 [TestFixture]
 public class UserInteractionServiceTests
 {
 	private UserInteractionService _service;
+	private Mock<IAnsiConsole> _consoleMock;
 	private Dictionary<DateOnly, List<PromptResponsePair>> _testPromptsByDay;
 	private List<PromptResponsePair> _testPrompts;
 
 	[SetUp]
 	public void Setup()
 	{
-		_service = new UserInteractionService();
+		_consoleMock = new Mock<IAnsiConsole>();
+		_service = new UserInteractionService(_consoleMock.Object);
 		
 		// Initialize test data
 		_testPromptsByDay = new Dictionary<DateOnly, List<PromptResponsePair>>
