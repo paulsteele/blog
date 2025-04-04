@@ -93,11 +93,49 @@ public class UserInteractionServiceTests
 	public void ShouldReturnSelectedPromptsWhenPromptsExist()
 	{
 		// Arrange
-		// Setup in SetUp method
+		var testPrompts = new List<PromptResponsePair>();
+		for (int i = 1; i <= 10; i++)
+		{
+			testPrompts.Add(new PromptResponsePair 
+			{ 
+				Prompt = $"Test prompt {i}", 
+				Response = $"Test response {i}" 
+			});
+		}
+		
+		// Select prompts 2, 4, 7, and 9 (non-consecutive)
+		// First, navigate to prompt 2 and select it
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.Spacebar);
+		
+		// Navigate to prompt 4 and select it
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.Spacebar);
+		
+		// Navigate to prompt 7 and select it
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.Spacebar);
+		
+		// Navigate to prompt 9 and select it
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.Spacebar);
+		
+		// Confirm selection
+		_testConsole.Input.PushKey(ConsoleKey.Enter);
 
-		// Act & Assert
-		// This test will depend on how you want to handle the console interaction
-		// Would need to mock or use a testing framework for Spectre.Console
+		// Act
+		var result = _service.SelectPrompts(testPrompts);
+		
+		// Assert
+		Assert.That(result, Has.Count.EqualTo(4));
+		Assert.That(result, Contains.Item(testPrompts[1])); // Index 1 = prompt 2
+		Assert.That(result, Contains.Item(testPrompts[3])); // Index 3 = prompt 4
+		Assert.That(result, Contains.Item(testPrompts[6])); // Index 6 = prompt 7
+		Assert.That(result, Contains.Item(testPrompts[8])); // Index 8 = prompt 9
 	}
 
 	[Test]
