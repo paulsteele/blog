@@ -2,22 +2,22 @@ namespace LlmHistoryToPost.Tests.Services;
 
 using LlmHistoryToPost.Models;
 using LlmHistoryToPost.Services;
-using Moq;
 using Spectre.Console;
+using Spectre.Console.Testing;
 
 [TestFixture]
 public class UserInteractionServiceTests
 {
 	private UserInteractionService _service;
-	private Mock<IAnsiConsole> _consoleMock;
+	private TestConsole _testConsole;
 	private Dictionary<DateOnly, List<PromptResponsePair>> _testPromptsByDay;
 	private List<PromptResponsePair> _testPrompts;
 
 	[SetUp]
 	public void Setup()
 	{
-		_consoleMock = new Mock<IAnsiConsole>();
-		_service = new UserInteractionService(_consoleMock.Object);
+		_testConsole = new TestConsole();
+		_service = new UserInteractionService(_testConsole);
 		
 		// Initialize test data
 		_testPromptsByDay = new Dictionary<DateOnly, List<PromptResponsePair>>
@@ -56,8 +56,9 @@ public class UserInteractionServiceTests
 			{ new DateOnly(2025, 4, 3), [] }
 		};
 		
-		_consoleMock.Setup(c => c.Prompt(It.IsAny<SelectionPrompt<DateOnly>>()))
-			.Returns(new DateOnly(2025, 4, 2));
+		// Set up the test console to select the second option
+		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
+		_testConsole.Input.PushKey(ConsoleKey.Enter);
 
 		var result = _service.SelectDay(dict);
 		
