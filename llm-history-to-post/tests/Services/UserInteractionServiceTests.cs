@@ -36,17 +36,14 @@ public class UserInteractionServiceTests
 	[Test]
 	public void ShouldReturnDayWhenOnlyOneDayExists()
 	{
-		//inline this date variable AI!
-		var date = new DateOnly(2025, 4, 1);
-		
 		var singleDayDict = new Dictionary<DateOnly, List<PromptResponsePair>>
 		{
-			{ date, [] }
+			{ new DateOnly(2025, 4, 1), [] }
 		};
 
 		var result = _service.SelectDay(singleDayDict);
 		
-		Assert.That(result, Is.EqualTo(date));
+		Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 1)));
 	}
 
 	[Test]
