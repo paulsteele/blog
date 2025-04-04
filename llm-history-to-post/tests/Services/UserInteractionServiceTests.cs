@@ -163,11 +163,11 @@ public class UserInteractionServiceTests
 		{
 			// Check first prompt
 			Assert.That(selectedPrompts[0].UserVerdict, Is.EqualTo("Good"));
-			Assert.That(selectedPrompts[0].UserComment, Is.EqualTo("This is a good prompt"));
+			Assert.That(selectedPrompts[0].VerdictComment, Is.EqualTo("This is a good prompt"));
 			
 			// Check second prompt
 			Assert.That(selectedPrompts[1].UserVerdict, Is.EqualTo("Bad"));
-			Assert.That(selectedPrompts[1].UserComment, Is.EqualTo("This is a bad prompt"));
+			Assert.That(selectedPrompts[1].VerdictComment, Is.EqualTo("This is a bad prompt"));
 		});
 	}
 
