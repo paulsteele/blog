@@ -94,7 +94,7 @@ public class UserInteractionServiceTests
 	{
 		// Arrange
 		var testPrompts = new List<PromptResponsePair>();
-		for (int i = 1; i <= 10; i++)
+		for (var i = 1; i <= 10; i++)
 		{
 			testPrompts.Add(new PromptResponsePair 
 			{ 
@@ -103,8 +103,8 @@ public class UserInteractionServiceTests
 			});
 		}
 		
-		// Select prompts 2, 4, 7, and 9 (non-consecutive)
-		// First, navigate to prompt 2 and select it
+		// Select prompts 2, 4, 7, and 9
+		// Navigate to prompt 2 and select it
 		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
 		_testConsole.Input.PushKey(ConsoleKey.Spacebar);
 		
@@ -124,18 +124,15 @@ public class UserInteractionServiceTests
 		_testConsole.Input.PushKey(ConsoleKey.DownArrow);
 		_testConsole.Input.PushKey(ConsoleKey.Spacebar);
 		
-		// Confirm selection
 		_testConsole.Input.PushKey(ConsoleKey.Enter);
 
-		// Act
 		var result = _service.SelectPrompts(testPrompts);
 		
-		// Assert
 		Assert.That(result, Has.Count.EqualTo(4));
-		Assert.That(result, Contains.Item(testPrompts[1])); // Index 1 = prompt 2
-		Assert.That(result, Contains.Item(testPrompts[3])); // Index 3 = prompt 4
-		Assert.That(result, Contains.Item(testPrompts[6])); // Index 6 = prompt 7
-		Assert.That(result, Contains.Item(testPrompts[8])); // Index 8 = prompt 9
+		Assert.That(result, Contains.Item(testPrompts[1])); 
+		Assert.That(result, Contains.Item(testPrompts[3]));
+		Assert.That(result, Contains.Item(testPrompts[6]));
+		Assert.That(result, Contains.Item(testPrompts[8]));
 	}
 
 	[Test]
