@@ -36,6 +36,7 @@ public class UserInteractionServiceTests
 	[Test]
 	public void ShouldReturnDayWhenOnlyOneDayExists()
 	{
+		//inline this date variable AI!
 		var date = new DateOnly(2025, 4, 1);
 		
 		var singleDayDict = new Dictionary<DateOnly, List<PromptResponsePair>>
