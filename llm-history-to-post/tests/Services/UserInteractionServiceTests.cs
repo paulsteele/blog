@@ -2,7 +2,6 @@ namespace LlmHistoryToPost.Tests.Services;
 
 using LlmHistoryToPost.Models;
 using LlmHistoryToPost.Services;
-using Spectre.Console;
 using Spectre.Console.Testing;
 
 [TestFixture]
@@ -17,6 +16,8 @@ public class UserInteractionServiceTests
 	public void Setup()
 	{
 		_testConsole = new TestConsole();
+		_testConsole.Profile.Capabilities.Interactive = true;
+		
 		_service = new UserInteractionService(_testConsole);
 		
 		// Initialize test data
