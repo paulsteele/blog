@@ -54,7 +54,8 @@ public class UserInteractionServiceTests
 		{
 			{ new DateOnly(2025, 4, 1), [] },
 			{ new DateOnly(2025, 4, 2), [] },
-			{ new DateOnly(2025, 4, 3), [] }
+			{ new DateOnly(2025, 4, 3), [] },
+			{ new DateOnly(2025, 4, 4), [] }
 		};
 		
 		// Set up the test console to select the second option
