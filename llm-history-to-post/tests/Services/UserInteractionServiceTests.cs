@@ -139,11 +139,36 @@ public class UserInteractionServiceTests
 	public void ShouldSetVerdictAndCommentWhenCollectingVerdicts()
 	{
 		// Arrange
-		// Setup in SetUp method
-
-		// Act & Assert
-		// This test will depend on how you want to handle the console interaction
-		// Would need to mock or use a testing framework for Spectre.Console
+		var selectedPrompts = new List<PromptResponsePair>
+		{
+			new() { Prompt = "Test prompt 1", Response = "Test response 1" },
+			new() { Prompt = "Test prompt 2", Response = "Test response 2" }
+		};
+		
+		// Simulate user selecting "Good" for first prompt with comment
+		_testConsole.Input.PushKey(ConsoleKey.G);
+		_testConsole.Input.PushText("This is a good prompt");
+		_testConsole.Input.PushKey(ConsoleKey.Enter);
+		
+		// Simulate user selecting "Bad" for second prompt with comment
+		_testConsole.Input.PushKey(ConsoleKey.B);
+		_testConsole.Input.PushText("This is a bad prompt");
+		_testConsole.Input.PushKey(ConsoleKey.Enter);
+		
+		// Act
+		_service.CollectVerdicts(selectedPrompts);
+		
+		// Assert
+		Assert.Multiple(() =>
+		{
+			// Check first prompt
+			Assert.That(selectedPrompts[0].Verdict, Is.EqualTo("Good"));
+			Assert.That(selectedPrompts[0].Comment, Is.EqualTo("This is a good prompt"));
+			
+			// Check second prompt
+			Assert.That(selectedPrompts[1].Verdict, Is.EqualTo("Bad"));
+			Assert.That(selectedPrompts[1].Comment, Is.EqualTo("This is a bad prompt"));
+		});
 	}
 
 	[Test]
