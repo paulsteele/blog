@@ -49,15 +49,22 @@ public class UserInteractionServiceTests
 	[Test]
 	public void ShouldPromptForSelectionWhenMultipleDaysExist()
 	{
+		// Arrange
 		var dict = new Dictionary<DateOnly, List<PromptResponsePair>>
 		{
 			{ new DateOnly(2025, 4, 1), [] },
 			{ new DateOnly(2025, 4, 2), [] }
 		};
+		
+		// Setup mock to return the second option (index 1)
+		_consoleMock.Setup(c => c.Prompt(It.IsAny<SelectionPrompt<DateOnly>>()))
+			.Returns(new DateOnly(2025, 4, 2));
 
+		// Act
 		var result = _service.SelectDay(dict);
 		
-		Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 1)));
+		// Assert
+		Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 2)));
 	}
 
 	[Test]
