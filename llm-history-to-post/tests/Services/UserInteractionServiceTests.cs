@@ -146,12 +146,12 @@ public class UserInteractionServiceTests
 		};
 		
 		// Simulate user selecting "Good" for first prompt with comment
-		_testConsole.Input.PushKey(ConsoleKey.G);
+		_testConsole.Input.PushKey(ConsoleKey.Y);
 		_testConsole.Input.PushText("This is a good prompt");
 		_testConsole.Input.PushKey(ConsoleKey.Enter);
 		
 		// Simulate user selecting "Bad" for second prompt with comment
-		_testConsole.Input.PushKey(ConsoleKey.B);
+		_testConsole.Input.PushKey(ConsoleKey.N);
 		_testConsole.Input.PushText("This is a bad prompt");
 		_testConsole.Input.PushKey(ConsoleKey.Enter);
 		
@@ -162,12 +162,12 @@ public class UserInteractionServiceTests
 		Assert.Multiple(() =>
 		{
 			// Check first prompt
-			Assert.That(selectedPrompts[0].UserVerdict, Is.EqualTo("Good"));
-			Assert.That(selectedPrompts[0].VerdictComment, Is.EqualTo("This is a good prompt"));
+			Assert.That(selectedPrompts[0].IsSuccess, Is.EqualTo("Good"));
+			Assert.That(selectedPrompts[0].UserComment, Is.EqualTo("This is a good prompt"));
 			
 			// Check second prompt
-			Assert.That(selectedPrompts[1].UserVerdict, Is.EqualTo("Bad"));
-			Assert.That(selectedPrompts[1].VerdictComment, Is.EqualTo("This is a bad prompt"));
+			Assert.That(selectedPrompts[1].IsSuccess, Is.EqualTo("Bad"));
+			Assert.That(selectedPrompts[1].UserComment, Is.EqualTo("This is a bad prompt"));
 		});
 	}
 
