@@ -36,12 +36,12 @@ public class UserInteractionServiceTests
 	[Test]
 	public void ShouldReturnDayWhenOnlyOneDayExists()
 	{
-		var singleDayDict = new Dictionary<DateOnly, List<PromptResponsePair>>
+		var dict = new Dictionary<DateOnly, List<PromptResponsePair>>
 		{
 			{ new DateOnly(2025, 4, 1), [] }
 		};
 
-		var result = _service.SelectDay(singleDayDict);
+		var result = _service.SelectDay(dict);
 		
 		Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 1)));
 	}
@@ -49,12 +49,15 @@ public class UserInteractionServiceTests
 	[Test]
 	public void ShouldPromptForSelectionWhenMultipleDaysExist()
 	{
-		// Arrange
-		// Setup in SetUp method
+		var dict = new Dictionary<DateOnly, List<PromptResponsePair>>
+		{
+			{ new DateOnly(2025, 4, 1), [] },
+			{ new DateOnly(2025, 4, 2), [] }
+		};
 
-		// Act & Assert
-		// This test will depend on how you want to handle the console interaction
-		// Would need to mock or use a testing framework for Spectre.Console
+		var result = _service.SelectDay(dict);
+		
+		Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 1)));
 	}
 
 	[Test]
