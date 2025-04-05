@@ -42,13 +42,8 @@ public class BlogPostGeneratorTests
 	[Test]
 	public void ShouldGenerateCorrectMarkdownWithValidInputs()
 	{
-		// Arrange
-		// Setup is done in the SetUp method
-
-		// Act
 		var result = _generator.GenerateBlogPost(_testDate, _testPrompts, _testDayNumber);
 
-		// Assert
 		Assert.That(result, Is.Not.Null);
 		Assert.That(result, Does.Contain($"title: \"Hour a Day: AI - Day {_testDayNumber} - \""));
 		Assert.That(result, Does.Contain($"date: {_testDate}"));
