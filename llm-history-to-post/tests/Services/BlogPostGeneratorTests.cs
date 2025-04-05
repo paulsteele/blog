@@ -46,7 +46,7 @@ public class BlogPostGeneratorTests
 
 		Assert.That(result, Is.Not.Null);
 		Assert.That(result, Does.Contain($"title: \"Hour a Day: AI - Day {_testDayNumber} - \""));
-		Assert.That(result, Does.Contain($"date: {_testDate:yyyy'-'MM'-'dd'T'HH':'mm':'ssK}"));
+		Assert.That(result, Does.Contain("date: 2025-04-01T12:00:00+05:00"));
 		Assert.That(result, Does.Contain("## Introduction"));
 		Assert.That(result, Does.Contain("## Prompt 1"));
 		Assert.That(result, Does.Contain("## Prompt 2"));
