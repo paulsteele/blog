@@ -173,10 +173,33 @@ public class UserInteractionServiceTests
 	public void ShouldReturnEnteredNumberWhenGettingDayNumber()
 	{
 		// Arrange
-		// Setup in SetUp method
+		_testConsole.Input.PushTextWithEnter("10");
 
-		// Act & Assert
-		// This test will depend on how you want to handle the console interaction
-		// Would need to mock or use a testing framework for Spectre.Console
+		// Act
+		var result = _service.GetDayNumber();
+
+		// Assert
+		Assert.That(result, Is.EqualTo(10));
+	}
+
+	[Test]
+	public void ShouldPromptAgainWhenInvalidNumberIsEntered()
+	{
+		// Arrange - First enter invalid input, then valid input
+		_testConsole.Input.PushTextWithEnter("invalid");
+		_testConsole.Input.PushTextWithEnter("0");  // Invalid number (too low)
+		_testConsole.Input.PushTextWithEnter("100"); // Invalid number (too high)
+		_testConsole.Input.PushTextWithEnter("15");  // Valid number
+
+		// Act
+		var result = _service.GetDayNumber();
+
+		// Assert
+		Assert.That(result, Is.EqualTo(15));
+		
+		// Verify we were prompted multiple times (once initially + 3 retries)
+		var output = _testConsole.Output;
+		var promptCount = output.Split("Enter the day number").Length - 1;
+		Assert.That(promptCount, Is.GreaterThanOrEqualTo(4));
 	}
 }
