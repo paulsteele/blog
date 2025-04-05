@@ -9,8 +9,6 @@ public class UserInteractionServiceTests
 {
 	private UserInteractionService _service;
 	private TestConsole _testConsole;
-	private Dictionary<DateOnly, List<PromptResponsePair>> _testPromptsByDay;
-	private List<PromptResponsePair> _testPrompts;
 
 	[SetUp]
 	public void Setup()
@@ -19,19 +17,6 @@ public class UserInteractionServiceTests
 		_testConsole.Profile.Capabilities.Interactive = true;
 		
 		_service = new UserInteractionService(_testConsole);
-		
-		// Initialize test data
-		_testPromptsByDay = new Dictionary<DateOnly, List<PromptResponsePair>>
-		{
-			{ new DateOnly(2025, 4, 1), [new PromptResponsePair { Prompt = "Test prompt 1" }] },
-			{ new DateOnly(2025, 4, 2), [new PromptResponsePair { Prompt = "Test prompt 2" }] }
-		};
-		
-		_testPrompts =
-		[
-			new PromptResponsePair { Prompt = "Test prompt 1", Response = "Test response 1" },
-			new PromptResponsePair { Prompt = "Test prompt 2", Response = "Test response 2" }
-		];
 	}
 
 	[Test]
