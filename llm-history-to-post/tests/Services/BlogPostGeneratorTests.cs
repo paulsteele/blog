@@ -9,14 +9,14 @@ public class BlogPostGeneratorTests
 {
 	private BlogPostGenerator _generator;
 	private List<PromptResponsePair> _testPrompts;
-	private DateOnly _testDate;
+	private DateTimeOffset _testDate;
 	private int _testDayNumber;
 
 	[SetUp]
 	public void Setup()
 	{
 		_generator = new BlogPostGenerator();
-		_testDate = new DateOnly(2025, 4, 1);
+		_testDate = new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero);
 		_testDayNumber = 7;
 		
 		_testPrompts =
@@ -46,7 +46,7 @@ public class BlogPostGeneratorTests
 
 		Assert.That(result, Is.Not.Null);
 		Assert.That(result, Does.Contain($"title: \"Hour a Day: AI - Day {_testDayNumber} - \""));
-		Assert.That(result, Does.Contain($"date: {_testDate}"));
+		Assert.That(result, Does.Contain($"date: {_testDate:yyyy'-'MM'-'dd'T'HH':'mm':'ssK}"));
 		Assert.That(result, Does.Contain("## Introduction"));
 		Assert.That(result, Does.Contain("## Prompt 1"));
 		Assert.That(result, Does.Contain("## Prompt 2"));

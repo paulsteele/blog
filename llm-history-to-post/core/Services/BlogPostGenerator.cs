@@ -6,7 +6,7 @@ using LlmHistoryToPost.Models;
 public class BlogPostGenerator
 {
 	public string GenerateBlogPost(
-		DateOnly date, 
+		DateTimeOffset date, 
 		List<PromptResponsePair> selectedPrompts, 
 		int dayNumber)
 	{
@@ -15,7 +15,7 @@ public class BlogPostGenerator
 		// YAML frontmatter
 		sb.AppendLine("---");
 		sb.AppendLine($"title: \"Hour a Day: AI - Day {dayNumber} - \"");
-		sb.AppendLine($"date: {DateTimeOffset.Now:yyyy'-'MM'-'dd'T'HH':'mm':'ssK}");
+		sb.AppendLine($"date: {date:yyyy'-'MM'-'dd'T'HH':'mm':'ssK}");
 		sb.AppendLine("categories:");
 		sb.AppendLine("  - \"Hour a Day: AI\"");
 		sb.AppendLine("tags:");
@@ -68,7 +68,7 @@ public class BlogPostGenerator
 		return sb.ToString();
 	}
 	
-	public string GetOutputFilePath(DateOnly date, int dayNumber)
+	public string GetOutputFilePath(DateTimeOffset date, int dayNumber)
 	{
 		var year = date.Year;
 		var month = date.Month.ToString("00");
