@@ -160,11 +160,11 @@ public class UserInteractionServiceTests
 		Assert.Multiple(() =>
 		{
 			// Check first prompt
-			Assert.That(selectedPrompts[0].IsSuccess, Is.EqualTo(true));
+			Assert.That(selectedPrompts[0].IsSuccess, Is.True);
 			Assert.That(selectedPrompts[0].UserComment, Is.EqualTo("This is a good prompt"));
 			
 			// Check second prompt
-			Assert.That(selectedPrompts[1].IsSuccess, Is.EqualTo(false));
+			Assert.That(selectedPrompts[1].IsSuccess, Is.False);
 			Assert.That(selectedPrompts[1].UserComment, Is.EqualTo("This is a bad prompt"));
 		});
 	}
