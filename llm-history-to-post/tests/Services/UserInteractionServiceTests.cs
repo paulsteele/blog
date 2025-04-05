@@ -146,14 +146,12 @@ public class UserInteractionServiceTests
 		};
 		
 		// Simulate user selecting "Good" for first prompt with comment
-		_testConsole.Input.PushKey(ConsoleKey.Y);
-		_testConsole.Input.PushText("This is a good prompt");
-		_testConsole.Input.PushKey(ConsoleKey.Enter);
+		_testConsole.Input.PushTextWithEnter("Y");
+		_testConsole.Input.PushTextWithEnter("This is a good prompt");
 		
 		// Simulate user selecting "Bad" for second prompt with comment
-		_testConsole.Input.PushKey(ConsoleKey.N);
-		_testConsole.Input.PushText("This is a bad prompt");
-		_testConsole.Input.PushKey(ConsoleKey.Enter);
+		_testConsole.Input.PushTextWithEnter("Y");
+		_testConsole.Input.PushTextWithEnter("This is a bad prompt");
 		
 		// Act
 		_service.CollectVerdicts(selectedPrompts);

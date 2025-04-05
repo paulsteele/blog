@@ -494,3 +494,4 @@ public
 resources/_gen
 bin
 obj
+*.DotSettings.user
