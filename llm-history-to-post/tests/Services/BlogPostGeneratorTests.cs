@@ -16,7 +16,7 @@ public class BlogPostGeneratorTests
 	public void Setup()
 	{
 		_generator = new BlogPostGenerator();
-		_testDate = new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero);
+		_testDate = new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.FromHours(5));
 		_testDayNumber = 7;
 		
 		_testPrompts =
