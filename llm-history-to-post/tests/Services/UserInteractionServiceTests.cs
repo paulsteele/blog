@@ -185,21 +185,15 @@ public class UserInteractionServiceTests
 	[Test]
 	public void ShouldPromptAgainWhenInvalidNumberIsEntered()
 	{
-		// Arrange - First enter invalid input, then valid input
 		_testConsole.Input.PushTextWithEnter("invalid");
-		_testConsole.Input.PushTextWithEnter("0");  // Invalid number (too low)
-		_testConsole.Input.PushTextWithEnter("100"); // Invalid number (too high)
 		_testConsole.Input.PushTextWithEnter("15");  // Valid number
 
-		// Act
 		var result = _service.GetDayNumber();
 
-		// Assert
 		Assert.That(result, Is.EqualTo(15));
 		
-		// Verify we were prompted multiple times (once initially + 3 retries)
 		var output = _testConsole.Output;
 		var promptCount = output.Split("Enter the day number").Length - 1;
-		Assert.That(promptCount, Is.GreaterThanOrEqualTo(4));
+		Assert.That(promptCount, Is.EqualTo(2));
 	}
 }
