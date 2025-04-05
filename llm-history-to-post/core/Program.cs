@@ -44,13 +44,14 @@ public static class Program
 			
 			// Generate blog post
 			var generator = new BlogPostGenerator();
+			var date = DateTimeOffset.Now;
 			var blogPostContent = generator.GenerateBlogPost(
-				selectedDay, 
+				date, 
 				selectedPrompts, 
 				dayNumber);
 			
 			// Save to file
-			var outputFilePath = generator.GetOutputFilePath(selectedDay, dayNumber);
+			var outputFilePath = generator.GetOutputFilePath(date, dayNumber);
 			File.WriteAllText(outputFilePath, blogPostContent);
 			
 			console.MarkupLine($"[green]Blog post generated successfully: {outputFilePath}[/]");
