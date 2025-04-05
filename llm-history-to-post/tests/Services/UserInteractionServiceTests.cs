@@ -150,7 +150,7 @@ public class UserInteractionServiceTests
 		_testConsole.Input.PushTextWithEnter("This is a good prompt");
 		
 		// Simulate user selecting "Bad" for second prompt with comment
-		_testConsole.Input.PushTextWithEnter("Y");
+		_testConsole.Input.PushTextWithEnter("N");
 		_testConsole.Input.PushTextWithEnter("This is a bad prompt");
 		
 		// Act
