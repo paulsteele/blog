@@ -1,3 +1,5 @@
+using LlmHistoryToPost.Models;
+
 namespace LlmHistoryToPost;
 
 using Services;
