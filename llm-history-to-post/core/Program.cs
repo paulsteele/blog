@@ -75,16 +75,9 @@ public static class Program
 		{
 			// Look for .aider.chat.history.md in the directory tree
 			var historyFilePath = FilePathUtility.FindFileInDirectoryTree(".aider.chat.history.md");
-			
-			if (historyFilePath != null)
-			{
-				filePath = historyFilePath;
-			}
-			else
-			{
-				// If not found, default to current directory
-				filePath = Path.Combine(Directory.GetCurrentDirectory(), ".aider.chat.history.md");
-			}
+
+			// If not found, default to current directory
+			filePath = historyFilePath ?? Path.Combine(Directory.GetCurrentDirectory(), ".aider.chat.history.md");
 		}
 		
 		if (!File.Exists(filePath))
