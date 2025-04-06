@@ -17,7 +17,8 @@ public static class Program
 			
 			// Parse the chat history
 			var parser = new ChatHistoryParser();
-			var history = parser.ParseHistoryFile(inputFilePath);
+			var content = File.ReadAllText(inputFilePath);
+			var history = parser.ParseHistoryContent(content);
 			
 			// User interactions
 			var userInteractionService = new UserInteractionService(console);
