@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using LlmHistoryToPost.Models;
 using LlmHistoryToPost.Services;
 using Spectre.Console;
@@ -54,10 +52,10 @@ public static class Program
 		userInteractionService.CollectVerdicts(selectedPrompts);
 		
 		var dayNumber = userInteractionService.GetDayNumber();
-		GenerateBlogPost(console, selectedPrompts, dayNumber);
+		GenerateAndSaveBlogPost(console, selectedPrompts, dayNumber);
 	}
 	
-	private static void GenerateBlogPost(IAnsiConsole console, List<PromptResponsePair> selectedPrompts, int dayNumber)
+	private static void GenerateAndSaveBlogPost(IAnsiConsole console, List<PromptResponsePair> selectedPrompts, int dayNumber)
 	{
 		var generator = new BlogPostGenerator();
 		var date = DateTimeOffset.Now;
