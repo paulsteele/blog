@@ -12,12 +12,11 @@ public static class Program
 		
 		try
 		{
-			// Get the input file path
-			var inputFilePath = GetInputFilePath(args);
+			// Get the input file content
+			var content = GetInputFileContent(args);
 			
 			// Parse the chat history
 			var parser = new ChatHistoryParser();
-			var content = File.ReadAllText(inputFilePath);
 			var history = parser.ParseHistoryContent(content);
 			
 			// User interactions
@@ -64,22 +63,35 @@ public static class Program
 		}
 	}
 	
-	private static string GetInputFilePath(string[] args)
+	private static string GetInputFileContent(string[] args)
 	{
+		string filePath;
+		
 		if (args.Length > 0)
 		{
-			return args[0];
+			filePath = args[0];
 		}
-		
-		// Look for .aider.chat.history.md in the directory tree
-		var historyFilePath = FilePathUtility.FindFileInDirectoryTree(".aider.chat.history.md");
-		
-		if (historyFilePath != null)
+		else
 		{
-			return historyFilePath;
+			// Look for .aider.chat.history.md in the directory tree
+			var historyFilePath = FilePathUtility.FindFileInDirectoryTree(".aider.chat.history.md");
+			
+			if (historyFilePath != null)
+			{
+				filePath = historyFilePath;
+			}
+			else
+			{
+				// If not found, default to current directory
+				filePath = Path.Combine(Directory.GetCurrentDirectory(), ".aider.chat.history.md");
+			}
 		}
 		
-		// If not found, default to current directory
-		return Path.Combine(Directory.GetCurrentDirectory(), ".aider.chat.history.md");
+		if (!File.Exists(filePath))
+		{
+			throw new FileNotFoundException($"Chat history file not found: {filePath}");
+		}
+		
+		return File.ReadAllText(filePath);
 	}
 }
