@@ -58,16 +58,13 @@ public class BlogPostGeneratorTests
 	[Test]
 	public void ShouldGenerateMinimalMarkdownWithEmptyPromptList()
 	{
-		// Arrange
 		var emptyPrompts = new List<PromptResponsePair>();
 
-		// Act
 		var result = _generator.GenerateBlogPost(_testDate, emptyPrompts, _testDayNumber);
 
-		// Assert
 		Assert.That(result, Is.Not.Null);
 		Assert.That(result, Does.Contain($"title: \"Hour a Day: AI - Day {_testDayNumber} - \""));
-		Assert.That(result, Does.Contain($"date: {_testDate}"));
+		Assert.That(result, Does.Contain("date: 2025-04-01T12:00:00+05:00"));
 		Assert.That(result, Does.Contain("## Introduction"));
 		Assert.That(result, Does.Contain("## Conclusion"));
 		Assert.That(result, Does.Not.Contain("## Prompt"));
