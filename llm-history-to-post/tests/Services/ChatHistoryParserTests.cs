@@ -261,7 +261,7 @@ And here's the answer to your new question.
 		Assert.That(result.Sessions[0].PromptResponsePairs, Has.Count.EqualTo(2));
 		
 		// Check that consecutive prompts were combined
-		Assert.That(result.Sessions[0].PromptResponsePairs[0].Prompt, Is.EqualTo("First part of a question\n\nAnd here's the second part"));
+		Assert.That(result.Sessions[0].PromptResponsePairs[0].Prompt, Is.EqualTo("First part of a question\nAnd here's the second part"));
 		Assert.That(result.Sessions[0].PromptResponsePairs[0].Response, Is.EqualTo("Here's my response to your complete question."));
 		
 		// Check the second prompt-response pair
