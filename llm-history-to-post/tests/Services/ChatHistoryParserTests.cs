@@ -160,13 +160,55 @@ There are also [OneTimeSetUp] and [OneTimeTearDown] for code that should run onc
 	public void ShouldGroupSessionsByDayCorrectly()
 	{
 		// Arrange
-		// TODO: Create test file content with sessions from different days
+		var content = @"# aider chat started at 2025-04-01 10:15:30
+#### Hello, can you help me with a C# problem?
+
+I'd be happy to help with your C# problem. What specifically are you working on?
+
+# aider chat started at 2025-04-02 09:30:15
+#### How do I implement dependency injection?
+
+Dependency injection in C# is typically implemented using a DI container. Here's how you can set it up.
+
+# aider chat started at 2025-04-02 14:45:22
+#### What's the difference between interfaces and abstract classes?
+
+Interfaces and abstract classes serve different purposes in C#:
+
+1. Interfaces only declare functionality without implementation
+2. Abstract classes can provide partial implementation
+
+# aider chat started at 2025-04-03 11:20:45
+#### How do I use LINQ?
+
+LINQ (Language Integrated Query) provides a consistent way to query data from different sources.
+";
 
 		// Act
-		// TODO: Parse the file
+		var result = _parser.ParseHistoryContent(content);
 
 		// Assert
-		// TODO: Verify sessions are grouped by day correctly
+		Assert.That(result.Sessions, Has.Count.EqualTo(4));
+		Assert.That(result.PromptsByDay, Has.Count.EqualTo(3));
+		
+		// Check April 1st
+		var april1 = new DateOnly(2025, 4, 1);
+		Assert.That(result.PromptsByDay.ContainsKey(april1), Is.True);
+		Assert.That(result.PromptsByDay[april1], Has.Count.EqualTo(1));
+		Assert.That(result.PromptsByDay[april1][0].Prompt, Is.EqualTo("Hello, can you help me with a C# problem?"));
+		
+		// Check April 2nd
+		var april2 = new DateOnly(2025, 4, 2);
+		Assert.That(result.PromptsByDay.ContainsKey(april2), Is.True);
+		Assert.That(result.PromptsByDay[april2], Has.Count.EqualTo(2));
+		Assert.That(result.PromptsByDay[april2][0].Prompt, Is.EqualTo("How do I implement dependency injection?"));
+		Assert.That(result.PromptsByDay[april2][1].Prompt, Is.EqualTo("What's the difference between interfaces and abstract classes?"));
+		
+		// Check April 3rd
+		var april3 = new DateOnly(2025, 4, 3);
+		Assert.That(result.PromptsByDay.ContainsKey(april3), Is.True);
+		Assert.That(result.PromptsByDay[april3], Has.Count.EqualTo(1));
+		Assert.That(result.PromptsByDay[april3][0].Prompt, Is.EqualTo("How do I use LINQ?"));
 	}
 
 	[Test]
