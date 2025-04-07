@@ -211,31 +211,6 @@ LINQ (Language Integrated Query) provides a consistent way to query data from di
 		Assert.That(result.PromptsByDay[april3][0].Prompt, Is.EqualTo("How do I use LINQ?"));
 	}
 
-	[Test]
-	public void ShouldParseSinglePromptResponsePairCorrectly()
-	{
-		// Arrange
-		// TODO: Create session content with a single prompt-response pair
-
-		// Act
-		// TODO: Parse the prompt-response pairs
-
-		// Assert
-		// TODO: Verify the prompt-response pair was parsed correctly
-	}
-
-	[Test]
-	public void ShouldParseMultiplePromptResponsePairsCorrectly()
-	{
-		// Arrange
-		// TODO: Create session content with multiple prompt-response pairs
-
-		// Act
-		// TODO: Parse the prompt-response pairs
-
-		// Assert
-		// TODO: Verify all prompt-response pairs were parsed correctly
-	}
 
 	[Test]
 	public void ShouldCombineConsecutivePromptsCorrectly()
