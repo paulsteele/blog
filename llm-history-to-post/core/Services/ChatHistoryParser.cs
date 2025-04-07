@@ -8,17 +8,6 @@ public partial class ChatHistoryParser
 	private static readonly Regex SessionStartRegex = AiderChatRegex();
 	private static readonly Regex UserPromptRegex = UserRegex();
 	
-	public ChatHistory ParseHistoryFile(string filePath)
-	{
-		if (!File.Exists(filePath))
-		{
-			throw new FileNotFoundException($"Chat history file not found: {filePath}");
-		}
-		
-		var content = File.ReadAllText(filePath);
-		return ParseHistoryContent(content);
-	}
-	
 	public ChatHistory ParseHistoryContent(string content)
 	{
 		var history = new ChatHistory();

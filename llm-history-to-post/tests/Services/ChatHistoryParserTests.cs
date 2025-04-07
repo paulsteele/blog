@@ -6,43 +6,21 @@ using LlmHistoryToPost.Services;
 public class ChatHistoryParserTests
 {
 	private ChatHistoryParser _parser;
-	private string _testFilePath;
 
 	[SetUp]
 	public void Setup()
 	{
 		_parser = new ChatHistoryParser();
-		_testFilePath = Path.GetTempFileName();
-	}
-
-	[TearDown]
-	public void TearDown()
-	{
-		if (File.Exists(_testFilePath))
-		{
-			File.Delete(_testFilePath);
-		}
 	}
 
 	[Test]
-	public void ShouldThrowFileNotFoundExceptionWhenFileDoesNotExist()
+	public void ShouldReturnEmptyHistoryWhenContentIsEmpty()
 	{
 		// Arrange
-		var nonExistentFilePath = "non-existent-file.txt";
-
-		// Act & Assert
-		Assert.That(() => _parser.ParseHistoryFile(nonExistentFilePath), 
-			Throws.TypeOf<FileNotFoundException>());
-	}
-
-	[Test]
-	public void ShouldReturnEmptyHistoryWhenFileIsEmpty()
-	{
-		// Arrange
-		File.WriteAllText(_testFilePath, string.Empty);
+		var emptyContent = string.Empty;
 
 		// Act
-		var result = _parser.ParseHistoryFile(_testFilePath);
+		var result = _parser.ParseHistoryContent(emptyContent);
 
 		// Assert
 		Assert.That(result.Sessions, Is.Empty);
