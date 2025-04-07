@@ -100,14 +100,8 @@ public class BlogPostGeneratorTests
 	[Test]
 	public void ShouldReturnCorrectOutputFilePath()
 	{
-		// Arrange
-		// Mock FilePathUtility or use a test-specific implementation
-		// This test will depend on how you want to handle the static FilePathUtility
-
-		// Act
 		var result = _generator.GetOutputFilePath(_testDate, _testDayNumber);
 
-		// Assert
 		Assert.That(result, Is.Not.Null);
 		Assert.That(result, Does.EndWith($"2025-04-01-hadai-day-7-temp.md"));
 	}
