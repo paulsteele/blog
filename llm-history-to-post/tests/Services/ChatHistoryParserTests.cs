@@ -241,12 +241,31 @@ LINQ (Language Integrated Query) provides a consistent way to query data from di
 	public void ShouldCombineConsecutivePromptsCorrectly()
 	{
 		// Arrange
-		// TODO: Create session content with consecutive prompts
+		var content = @"# aider chat started at 2025-04-01 10:15:30
+#### First part of a question
+
+#### And here's the second part
+
+Here's my response to your complete question.
+
+#### A new separate question
+
+And here's the answer to your new question.
+";
 
 		// Act
-		// TODO: Parse the prompt-response pairs
+		var result = _parser.ParseHistoryContent(content);
 
 		// Assert
-		// TODO: Verify consecutive prompts are combined correctly
+		Assert.That(result.Sessions, Has.Count.EqualTo(1));
+		Assert.That(result.Sessions[0].PromptResponsePairs, Has.Count.EqualTo(2));
+		
+		// Check that consecutive prompts were combined
+		Assert.That(result.Sessions[0].PromptResponsePairs[0].Prompt, Is.EqualTo("First part of a question\n\nAnd here's the second part"));
+		Assert.That(result.Sessions[0].PromptResponsePairs[0].Response, Is.EqualTo("Here's my response to your complete question."));
+		
+		// Check the second prompt-response pair
+		Assert.That(result.Sessions[0].PromptResponsePairs[1].Prompt, Is.EqualTo("A new separate question"));
+		Assert.That(result.Sessions[0].PromptResponsePairs[1].Response, Is.EqualTo("And here's the answer to your new question."));
 	}
 }
