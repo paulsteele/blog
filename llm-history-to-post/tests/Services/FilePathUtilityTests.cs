@@ -6,6 +6,7 @@ namespace LlmHistoryToPost.Tests.Services;
 public class FilePathUtilityTests
 {
 	private string _testDirectory;
+	private string _originalDirectory;
 
 	[SetUp]
 	public void Setup()
@@ -13,11 +14,18 @@ public class FilePathUtilityTests
 		// Create a temporary directory structure for testing
 		_testDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 		Directory.CreateDirectory(_testDirectory);
+		
+		// Store original directory and set current directory to test directory
+		_originalDirectory = Environment.CurrentDirectory;
+		Environment.CurrentDirectory = _testDirectory;
 	}
 
 	[TearDown]
 	public void TearDown()
 	{
+		// Restore original directory
+		Environment.CurrentDirectory = _originalDirectory;
+		
 		// Clean up test directory
 		if (Directory.Exists(_testDirectory))
 		{
@@ -33,24 +41,12 @@ public class FilePathUtilityTests
 		var testFilePath = Path.Combine(_testDirectory, testFileName);
 		File.WriteAllText(testFilePath, "Test content");
 		
-		// Use reflection to set the current directory for testing
-		var originalDirectory = Environment.CurrentDirectory;
-		try
-		{
-			Environment.CurrentDirectory = _testDirectory;
-			
-			// Act
-			var result = FilePathUtility.FindFileInDirectoryTree(testFileName);
-			
-			// Assert
-			Assert.That(result, Is.Not.Null);
-			Assert.That(result, Is.EqualTo(testFilePath));
-		}
-		finally
-		{
-			// Restore original directory
-			Environment.CurrentDirectory = originalDirectory;
-		}
+		// Act
+		var result = FilePathUtility.FindFileInDirectoryTree(testFileName);
+		
+		// Assert
+		Assert.That(result, Is.Not.Null);
+		Assert.That(result, Is.EqualTo(testFilePath));
 	}
 
 	[Test]
