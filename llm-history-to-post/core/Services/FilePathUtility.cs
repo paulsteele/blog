@@ -38,9 +38,9 @@ public static class FilePathUtility
 	/// Finds or creates a directory for blog posts based on the date
 	/// </summary>
 	/// <param name="year">Year</param>
-	/// <param name="month">Month (2 digits)</param>
+	/// <param name="month">Month (1-12)</param>
 	/// <returns>The full path to the directory</returns>
-	public static string FindOrCreateBlogPostDirectory(int year, string month)
+	public static string FindOrCreateBlogPostDirectory(int year, int month)
 	{
 		// Start with current directory and look for a content/post directory structure
 		var currentDir = Directory.GetCurrentDirectory();
@@ -74,7 +74,7 @@ public static class FilePathUtility
 		}
 		
 		// Create the year/month directory structure
-		var postDir = Path.Combine(contentDir, "post", year.ToString(), month);
+		var postDir = Path.Combine(contentDir, "post", year.ToString(), month.ToString("D2"));
 		Directory.CreateDirectory(postDir);
 		
 		return postDir;
