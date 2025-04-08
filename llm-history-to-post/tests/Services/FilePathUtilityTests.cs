@@ -53,14 +53,13 @@ public class FilePathUtilityTests
 	public void ShouldReturnNullWhenFileDoesNotExist()
 	{
 		// Arrange
-		// Setup in SetUp method
-
+		var nonExistentFileName = "nonexistent.txt";
+		
 		// Act
-		// This test will depend on how you want to handle the static method
-		// var result = FilePathUtility.FindFileInDirectoryTree("nonexistent.txt");
-
+		var result = FilePathUtility.FindFileInDirectoryTree(nonExistentFileName);
+		
 		// Assert
-		// Assert.That(result, Is.Null);
+		Assert.That(result, Is.Null);
 	}
 
 	[Test]
