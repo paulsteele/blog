@@ -74,7 +74,7 @@ public class FilePathUtilityTests
 		Directory.CreateDirectory(monthDir);
 
 		// Act
-		var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, "04");
+		var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, 4);
 
 		// Assert
 		Assert.That(result, Is.Not.Null);
@@ -93,7 +93,7 @@ public class FilePathUtilityTests
 		var expectedPath = Path.Combine(_testDirectory, "content", "post", "2025", "04");
 		
 		// Act
-		var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, "04");
+		var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, 4);
 		
 		// Assert
 		Assert.That(result, Is.Not.Null);

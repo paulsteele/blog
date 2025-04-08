@@ -71,11 +71,14 @@ public class BlogPostGenerator
 	public string GetOutputFilePath(DateTimeOffset date, int dayNumber)
 	{
 		var year = date.Year;
-		var month = date.Month.ToString("00");
+		var month = date.Month;
 		var day = date.Day.ToString("00");
 		
 		var directory = FilePathUtility.FindOrCreateBlogPostDirectory(year, month);
 		
-		return Path.Combine(directory, $"{year}-{month}-{day}-hadai-day-{dayNumber}-temp.md");
+		// Format month as two digits for the filename
+		var monthStr = month.ToString("00");
+		
+		return Path.Combine(directory, $"{year}-{monthStr}-{day}-hadai-day-{dayNumber}-temp.md");
 	}
 }
