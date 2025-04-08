@@ -85,14 +85,19 @@ public class FilePathUtilityTests
 	public void ShouldCreateAndReturnPathWhenDirectoryDoesNotExist()
 	{
 		// Arrange
-		// Setup in SetUp method
-
+		// Create only the content directory
+		var contentDir = Path.Combine(_testDirectory, "content");
+		Directory.CreateDirectory(contentDir);
+		
+		// Expected path that should be created
+		var expectedPath = Path.Combine(_testDirectory, "content", "post", "2025", "04");
+		
 		// Act
-		// This test will depend on how you want to handle the static method
-		// var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, "04");
-
+		var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, "04");
+		
 		// Assert
-		// Assert.That(result, Is.Not.Null);
-		// Assert.That(Directory.Exists(result), Is.True);
+		Assert.That(result, Is.Not.Null);
+		Assert.That(Directory.Exists(result), Is.True);
+		Assert.That(result, Is.EqualTo(expectedPath));
 	}
 }
