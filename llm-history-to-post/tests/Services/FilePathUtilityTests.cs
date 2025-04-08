@@ -92,4 +92,24 @@ public class FilePathUtilityTests
 		
 		Assert.That(exception.Message, Does.Contain("content"));
 	}
+	
+	[Test]
+	public void ShouldCreateDateFoldersWhenContentDirectoryExists()
+	{
+		// Arrange
+		// Create only the content directory but not the year/month structure
+		var contentDir = Path.Combine(_testDirectory, "content");
+		Directory.CreateDirectory(contentDir);
+		
+		// Expected path that should be created
+		var expectedPath = Path.Combine(contentDir, "post", "2025", "04");
+		
+		// Act
+		var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, 4);
+		
+		// Assert
+		Assert.That(result, Is.Not.Null);
+		Assert.That(Directory.Exists(result), Is.True);
+		Assert.That(result, Is.EqualTo(expectedPath));
+	}
 }
