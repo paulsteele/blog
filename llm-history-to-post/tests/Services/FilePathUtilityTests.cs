@@ -27,16 +27,28 @@ public class FilePathUtilityTests
 	public void ShouldReturnFilePathWhenFileExists()
 	{
 		// Arrange
-		// Setup in SetUp method
-		// Need to mock or adapt for the current directory check
-
-		// Act
-		// This test will depend on how you want to handle the static method
-		// var result = FilePathUtility.FindFileInDirectoryTree("test.txt");
-
-		// Assert
-		// Assert.That(result, Is.Not.Null);
-		// Assert.That(result, Does.Contain("test.txt"));
+		var testFileName = "test.txt";
+		var testFilePath = Path.Combine(_testDirectory, testFileName);
+		File.WriteAllText(testFilePath, "Test content");
+		
+		// Use reflection to set the current directory for testing
+		var originalDirectory = Environment.CurrentDirectory;
+		try
+		{
+			Environment.CurrentDirectory = _testDirectory;
+			
+			// Act
+			var result = FilePathUtility.FindFileInDirectoryTree(testFileName);
+			
+			// Assert
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result, Is.EqualTo(testFilePath));
+		}
+		finally
+		{
+			// Restore original directory
+			Environment.CurrentDirectory = originalDirectory;
+		}
 	}
 
 	[Test]
