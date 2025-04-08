@@ -74,12 +74,11 @@ public class FilePathUtilityTests
 		Directory.CreateDirectory(monthDir);
 
 		// Act
-		// This test will depend on how you want to handle the static method
-		// var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, "04");
+		var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, "04");
 
 		// Assert
-		// Assert.That(result, Is.Not.Null);
-		// Assert.That(result, Is.EqualTo(monthDir));
+		Assert.That(result, Is.Not.Null);
+		Assert.That(result, Is.EqualTo(monthDir));
 	}
 
 	[Test]
