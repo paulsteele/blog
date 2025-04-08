@@ -1,3 +1,5 @@
+using LlmHistoryToPost.Services;
+
 namespace LlmHistoryToPost.Tests.Services;
 
 [TestFixture]
