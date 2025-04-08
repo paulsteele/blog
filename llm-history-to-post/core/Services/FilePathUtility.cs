@@ -66,11 +66,10 @@ public static class FilePathUtility
 			currentDir = parentDir.FullName;
 		}
 		
-		// If we didn't find a content directory, create one in the current directory
+		// If we didn't find a content directory, throw an exception
 		if (contentDir == null)
 		{
-			contentDir = Path.Combine(Directory.GetCurrentDirectory(), "content");
-			Directory.CreateDirectory(contentDir);
+			throw new DirectoryNotFoundException("Could not find 'content' directory in the directory tree.");
 		}
 		
 		// Create the year/month directory structure
