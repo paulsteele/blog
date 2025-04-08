@@ -13,9 +13,8 @@ public class FilePathUtilityTests
 		_testDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 		Directory.CreateDirectory(_testDirectory);
 		
-		// Create a test file
+		// Define test file path but don't create it
 		_testFile = Path.Combine(_testDirectory, "test.txt");
-		File.WriteAllText(_testFile, "Test content");
 	}
 
 	[TearDown]
