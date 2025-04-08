@@ -4,20 +4,6 @@ public class ChatHistory
 {
 	public List<ChatSession> Sessions { get; } = [];
 	public Dictionary<DateOnly, List<PromptResponsePair>> PromptsByDay { get; } = new();
-	
-	public void AddSession(ChatSession session)
-	{
-		Sessions.Add(session);
-		var day = DateOnly.FromDateTime(session.StartTime);
-		
-		if (!PromptsByDay.TryGetValue(day, out var promptsForDay))
-		{
-			promptsForDay = [];
-			PromptsByDay[day] = promptsForDay;
-		}
-		
-		promptsForDay.AddRange(session.PromptResponsePairs);
-	}
 }
 
 public record ChatSession
