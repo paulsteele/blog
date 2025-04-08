@@ -4,7 +4,6 @@ namespace LlmHistoryToPost.Tests.Services;
 public class FilePathUtilityTests
 {
 	private string _testDirectory;
-	private string _testFile;
 
 	[SetUp]
 	public void Setup()
@@ -12,9 +11,6 @@ public class FilePathUtilityTests
 		// Create a temporary directory structure for testing
 		_testDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 		Directory.CreateDirectory(_testDirectory);
-		
-		// Define test file path but don't create it
-		_testFile = Path.Combine(_testDirectory, "test.txt");
 	}
 
 	[TearDown]
@@ -40,7 +36,7 @@ public class FilePathUtilityTests
 
 		// Assert
 		// Assert.That(result, Is.Not.Null);
-		// Assert.That(result, Is.EqualTo(_testFile));
+		// Assert.That(result, Does.Contain("test.txt"));
 	}
 
 	[Test]
