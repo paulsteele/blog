@@ -112,4 +112,41 @@ public class FilePathUtilityTests
 		Assert.That(Directory.Exists(result), Is.True);
 		Assert.That(result, Is.EqualTo(expectedPath));
 	}
+	
+	[Test]
+	public void ShouldFindContentDirectoryInParentDirectory()
+	{
+		// Arrange
+		// Create a nested directory structure with content directory at the top
+		var contentDir = Path.Combine(_testDirectory, "content");
+		Directory.CreateDirectory(contentDir);
+		
+		// Create a nested subdirectory structure
+		var subDir1 = Path.Combine(_testDirectory, "subdir1");
+		var subDir2 = Path.Combine(subDir1, "subdir2");
+		Directory.CreateDirectory(subDir2);
+		
+		// Change current directory to the nested subdirectory
+		var originalDir = Environment.CurrentDirectory;
+		Environment.CurrentDirectory = subDir2;
+		
+		try
+		{
+			// Expected path that should be found and created
+			var expectedPath = Path.Combine(contentDir, "post", "2025", "04");
+			
+			// Act
+			var result = FilePathUtility.FindOrCreateBlogPostDirectory(2025, 4);
+			
+			// Assert
+			Assert.That(result, Is.Not.Null);
+			Assert.That(Directory.Exists(result), Is.True);
+			Assert.That(result, Is.EqualTo(expectedPath));
+		}
+		finally
+		{
+			// Restore the current directory even if the test fails
+			Environment.CurrentDirectory = originalDir;
+		}
+	}
 }
