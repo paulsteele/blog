@@ -44,46 +44,44 @@ public partial class ChatHistoryParser
 		}
 		
 		var currentPrompts = new List<string>();
+		var lastProcessedIndex = -1;
 		
 		for (var i = 0; i < promptMatches.Count; i++)
 		{
 			var currentMatch = promptMatches[i];
 			var promptText = currentMatch.Groups[1].Value.Trim();
 			
-			// Start a new prompt group or add to existing one
-			if (currentPrompts.Count == 0 || IsConsecutivePrompt(sessionContent, promptMatches[i-1], currentMatch))
+			// Check if this is the start of a new group (not consecutive with previous)
+			var isNewGroup = currentPrompts.Count > 0 && i > 0 && !IsConsecutivePrompt(sessionContent, promptMatches[i-1], currentMatch);
+			
+			// If we're starting a new group, process the previous group first
+			if (isNewGroup)
 			{
-				// Add to current group
-				currentPrompts.Add(promptText);
-			}
-			else
-			{
-				// We've found a non-consecutive prompt, so the previous group is complete
-				// Extract the response for the previous group
-				var previousMatchIndex = i - 1;
-				var response = ExtractResponse(promptMatches, sessionContent, previousMatchIndex);
-				
-				// Add the completed prompt-response pair
+				var response = ExtractResponse(promptMatches, sessionContent, i - 1);
 				pairs.Add(new PromptResponsePair
 				{
 					Prompt = string.Join("\n", currentPrompts),
 					Response = response
 				});
 				
-				// Start a new group with the current prompt
-				currentPrompts = [promptText];
+				// Reset for new group
+				currentPrompts = [];
+				lastProcessedIndex = i - 1;
 			}
-		}
-		
-		// Don't forget to process the last prompt group
-		if (currentPrompts.Count > 0)
-		{
-			var response = ExtractResponse(promptMatches, sessionContent, promptMatches.Count - 1);
-			pairs.Add(new PromptResponsePair
+			
+			// Add current prompt to the group
+			currentPrompts.Add(promptText);
+			
+			// If this is the last prompt, process the final group
+			if (i == promptMatches.Count - 1)
 			{
-				Prompt = string.Join("\n", currentPrompts),
-				Response = response
-			});
+				var response = ExtractResponse(promptMatches, sessionContent, i);
+				pairs.Add(new PromptResponsePair
+				{
+					Prompt = string.Join("\n", currentPrompts),
+					Response = response
+				});
+			}
 		}
 		
 		return pairs;
