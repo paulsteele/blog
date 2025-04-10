@@ -41,44 +41,48 @@ public partial class ChatHistoryParser
 			return;
 		}
 		
-		for (var i = 0; i < promptMatches.Count;)
+		var currentPrompts = new List<string>();
+		
+		for (var i = 0; i < promptMatches.Count; i++)
 		{
-			// Process a prompt group (consecutive prompts)
-			var (combinedPrompt, lastPromptIndex) = ExtractPromptGroup(promptMatches, sessionContent, i);
+			var currentMatch = promptMatches[i];
+			var promptText = currentMatch.Groups[1].Value.Trim();
 			
-			// Extract the response that follows this prompt group
-			var response = ExtractResponse(promptMatches, sessionContent, lastPromptIndex);
-			
-			// Create and add the prompt-response pair
+			// Start a new prompt group or add to existing one
+			if (currentPrompts.Count == 0 || IsConsecutivePrompt(sessionContent, promptMatches[i-1], currentMatch))
+			{
+				// Add to current group
+				currentPrompts.Add(promptText);
+			}
+			else
+			{
+				// We've found a non-consecutive prompt, so the previous group is complete
+				// Extract the response for the previous group
+				var previousMatchIndex = i - 1;
+				var response = ExtractResponse(promptMatches, sessionContent, previousMatchIndex);
+				
+				// Add the completed prompt-response pair
+				session.PromptResponsePairs.Add(new PromptResponsePair
+				{
+					Prompt = string.Join("\n", currentPrompts),
+					Response = response
+				});
+				
+				// Start a new group with the current prompt
+				currentPrompts = new List<string> { promptText };
+			}
+		}
+		
+		// Don't forget to process the last prompt group
+		if (currentPrompts.Count > 0)
+		{
+			var response = ExtractResponse(promptMatches, sessionContent, promptMatches.Count - 1);
 			session.PromptResponsePairs.Add(new PromptResponsePair
 			{
-				Prompt = string.Join("\n", combinedPrompt),
+				Prompt = string.Join("\n", currentPrompts),
 				Response = response
 			});
-			
-			// Move to the next prompt group
-			i = lastPromptIndex + 1;
 		}
-	}
-	
-	private (List<string> CombinedPrompt, int LastIndex) ExtractPromptGroup(
-		MatchCollection promptMatches, string sessionContent, int startIndex)
-	{
-		var combinedPrompt = new List<string> { promptMatches[startIndex].Groups[1].Value.Trim() };
-		var lastIndex = startIndex;
-		
-		for (var j = startIndex + 1; j < promptMatches.Count; j++)
-		{
-			if (!IsConsecutivePrompt(sessionContent, promptMatches[j-1], promptMatches[j]))
-			{
-				break;
-			}
-			
-			combinedPrompt.Add(promptMatches[j].Groups[1].Value.Trim());
-			lastIndex = j;
-		}
-		
-		return (combinedPrompt, lastIndex);
 	}
 	
 	private string ExtractResponse(MatchCollection promptMatches, string sessionContent, int lastPromptIndex)
@@ -100,7 +104,7 @@ public partial class ChatHistoryParser
 		var startOfNextMatch = next.Index;
 		
 		// Extract the text between the two matches
-		var textBetween = content.Substring(endOfCurrentLine, startOfNextMatch - endOfCurrentLine);
+		var textBetween = content[endOfCurrentLine..startOfNextMatch];
 		
 		// If there are only newlines and whitespace between matches, they're consecutive
 		return textBetween.Trim().Length == 0;
