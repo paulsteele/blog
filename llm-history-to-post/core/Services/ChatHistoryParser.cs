@@ -14,19 +14,20 @@ public partial class ChatHistoryParser
 		
 		// Parse sessions
 		var sessionMatches = SessionStartRegex.Matches(content);
-		history.Sessions = ParseSessions(content, sessionMatches);
+		history.Sessions.AddRange(ParseSessions(content, sessionMatches));
 		
 		// Group by day
 		foreach (var session in history.Sessions)
 		{
 			var dateOnly = DateOnly.FromDateTime(session.StartTime);
 			
-			if (!history.PromptsByDay.ContainsKey(dateOnly))
+			if (!history.PromptsByDay.TryGetValue(dateOnly, out var value))
 			{
-				history.PromptsByDay[dateOnly] = new List<PromptResponsePair>();
+				value = []; 
+				history.PromptsByDay[dateOnly] = value;
 			}
-			
-			history.PromptsByDay[dateOnly].AddRange(session.PromptResponsePairs);
+
+            value.AddRange(session.PromptResponsePairs);
 		}
 		
 		return history;
@@ -136,9 +137,9 @@ public partial class ChatHistoryParser
 		
 		return sessions;
 	}
-
-    [GeneratedRegex(@"# aider chat started at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", RegexOptions.Compiled)]
-    private static partial Regex AiderChatRegex();
-    [GeneratedRegex(@"^####\s+(.+)$", RegexOptions.Multiline | RegexOptions.Compiled)]
-    private static partial Regex UserRegex();
+	
+	[GeneratedRegex(@"# aider chat started at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", RegexOptions.Compiled)] 
+	private static partial Regex AiderChatRegex(); 
+	[GeneratedRegex(@"^####\s+(.+)$", RegexOptions.Multiline | RegexOptions.Compiled)] 
+	private static partial Regex UserRegex();
 }
