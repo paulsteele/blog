@@ -93,8 +93,10 @@ public class BlogPostGeneratorTests
 		Assert.That(result, Does.Contain("> Line 1"));
 		Assert.That(result, Does.Contain("> Line 2"));
 		Assert.That(result, Does.Contain("> Line 3"));
-		Assert.That(result, Does.Contain("> Response 1"));
-		Assert.That(result, Does.Contain("> Response 2"));
+		Assert.That(result, Does.Contain("{{< details \"**Response:** (click to expand)\" >}}"));
+		Assert.That(result, Does.Contain("Response 1"));
+		Assert.That(result, Does.Contain("Response 2"));
+		Assert.That(result, Does.Contain("{{< /details >}}"));
 	}
 
 	[Test]
