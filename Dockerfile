@@ -1,4 +1,4 @@
-FROM hugomods/hugo:base-0.131.0 AS hugo
+FROM hugomods/hugo:base-0.145.0 AS hugo
 WORKDIR /src
 COPY . .
 RUN hugo --minify

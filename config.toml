@@ -3,10 +3,14 @@ theme = "hugo-theme-monochrome"
 title = "The Blog of Paul Steele"
 author = "Paul Steele"
 copyright = "© 2022 Paul Steele"
-paginate = 5
 languageCode = "en"
 DefaultContentLanguage = "en"
 enableInlineShortcodes = true
+
+[pagination]
+  disableAliases = false
+  pagerSize = 10
+  path = 'page'
 
 [[menu.navbar]]
 identifier = "categories"
