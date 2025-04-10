@@ -1,9 +1,8 @@
 namespace LlmHistoryToPost.Services;
 
 using System.Collections.Generic;
-using LlmHistoryToPost.Models;
+using Models;
 using Spectre.Console;
-using Spectre.Console.Rendering;
 
 public class UserInteractionService(IAnsiConsole console)
 {
