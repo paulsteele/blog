@@ -44,7 +44,6 @@ public partial class ChatHistoryParser
 		}
 		
 		var currentPrompts = new List<string>();
-		var lastProcessedIndex = -1;
 		
 		for (var i = 0; i < promptMatches.Count; i++)
 		{
@@ -66,7 +65,6 @@ public partial class ChatHistoryParser
 				
 				// Reset for new group
 				currentPrompts = [];
-				lastProcessedIndex = i - 1;
 			}
 			
 			// Add current prompt to the group
