@@ -71,7 +71,7 @@ public partial class ChatHistoryParser
 				});
 				
 				// Start a new group with the current prompt
-				currentPrompts = new List<string> { promptText };
+				currentPrompts = [promptText];
 			}
 		}
 		
@@ -89,7 +89,7 @@ public partial class ChatHistoryParser
 		return pairs;
 	}
 	
-	private string ExtractResponse(MatchCollection promptMatches, string sessionContent, int lastPromptIndex)
+	private static string ExtractResponse(MatchCollection promptMatches, string sessionContent, int lastPromptIndex)
 	{
 		var lastPromptMatch = promptMatches[lastPromptIndex];
 		var responseStartIndex = lastPromptMatch.Index + lastPromptMatch.Length;
@@ -101,7 +101,7 @@ public partial class ChatHistoryParser
 		return sessionContent[responseStartIndex..responseEndIndex].Trim();
 	}
 	
-	private bool IsConsecutivePrompt(string content, Match current, Match next)
+	private static bool IsConsecutivePrompt(string content, Match current, Match next)
 	{
 		// Calculate the text between the end of the current match and the start of the next match
 		var endOfCurrentLine = current.Index + current.Length;
@@ -138,7 +138,7 @@ public partial class ChatHistoryParser
 			var sessionContent = content.Substring(startIndex, endIndex - startIndex);
 			
 			// Parse prompt-response pairs
-			session.PromptResponsePairs = ParsePromptResponsePairs(sessionContent);
+			session.PromptResponsePairs.AddRange(ParsePromptResponsePairs(sessionContent));
 			
 			sessions.Add(session);
 		}
