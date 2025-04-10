@@ -33,12 +33,14 @@ public partial class ChatHistoryParser
 		return history;
 	}
 	
-	private void ParsePromptResponsePairs(string sessionContent, ChatSession session)
+	private List<PromptResponsePair> ParsePromptResponsePairs(string sessionContent)
 	{
+		var pairs = new List<PromptResponsePair>();
 		var promptMatches = UserPromptRegex.Matches(sessionContent);
+		
 		if (promptMatches.Count == 0)
 		{
-			return;
+			return pairs;
 		}
 		
 		var currentPrompts = new List<string>();
@@ -62,7 +64,7 @@ public partial class ChatHistoryParser
 				var response = ExtractResponse(promptMatches, sessionContent, previousMatchIndex);
 				
 				// Add the completed prompt-response pair
-				session.PromptResponsePairs.Add(new PromptResponsePair
+				pairs.Add(new PromptResponsePair
 				{
 					Prompt = string.Join("\n", currentPrompts),
 					Response = response
@@ -77,12 +79,14 @@ public partial class ChatHistoryParser
 		if (currentPrompts.Count > 0)
 		{
 			var response = ExtractResponse(promptMatches, sessionContent, promptMatches.Count - 1);
-			session.PromptResponsePairs.Add(new PromptResponsePair
+			pairs.Add(new PromptResponsePair
 			{
 				Prompt = string.Join("\n", currentPrompts),
 				Response = response
 			});
 		}
+		
+		return pairs;
 	}
 	
 	private string ExtractResponse(MatchCollection promptMatches, string sessionContent, int lastPromptIndex)
@@ -134,7 +138,7 @@ public partial class ChatHistoryParser
 			var sessionContent = content.Substring(startIndex, endIndex - startIndex);
 			
 			// Parse prompt-response pairs
-			ParsePromptResponsePairs(sessionContent, session);
+			session.PromptResponsePairs = ParsePromptResponsePairs(sessionContent);
 			
 			sessions.Add(session);
 		}
