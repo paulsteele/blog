@@ -14,30 +14,7 @@ public partial class ChatHistoryParser
 		
 		// Parse sessions
 		var sessionMatches = SessionStartRegex.Matches(content);
-		for (var i = 0; i < sessionMatches.Count; i++)
-		{
-			var sessionMatch = sessionMatches[i];
-			var startTimeStr = sessionMatch.Groups[1].Value;
-			var startTime = DateTime.Parse(startTimeStr);
-			
-			var session = new ChatSession
-			{
-				StartTime = startTime
-			};
-			
-			// Determine the content of this session
-			var startIndex = sessionMatch.Index + sessionMatch.Length;
-			var endIndex = (i < sessionMatches.Count - 1) 
-				? sessionMatches[i + 1].Index 
-				: content.Length;
-			
-			var sessionContent = content.Substring(startIndex, endIndex - startIndex);
-			
-			// Parse prompt-response pairs
-			ParsePromptResponsePairs(sessionContent, session);
-			
-			history.Sessions.Add(session);
-		}
+		history.Sessions = ParseSessions(content, sessionMatches);
 		
 		// Group by day
 		foreach (var session in history.Sessions)
@@ -107,11 +84,12 @@ public partial class ChatHistoryParser
 	{
 		var lastPromptMatch = promptMatches[lastPromptIndex];
 		var responseStartIndex = lastPromptMatch.Index + lastPromptMatch.Length;
-		var responseEndIndex = (lastPromptIndex < promptMatches.Count - 1) 
+		
+		var responseEndIndex = lastPromptIndex < promptMatches.Count - 1 
 			? promptMatches[lastPromptIndex + 1].Index 
 			: sessionContent.Length;
 		
-		return sessionContent.Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
+		return sessionContent[responseStartIndex..responseEndIndex].Trim();
 	}
 	
 	private bool IsConsecutivePrompt(string content, Match current, Match next)
@@ -125,6 +103,38 @@ public partial class ChatHistoryParser
 		
 		// If there are only newlines and whitespace between matches, they're consecutive
 		return textBetween.Trim().Length == 0;
+	}
+
+	private List<ChatSession> ParseSessions(string content, MatchCollection sessionMatches)
+	{
+		var sessions = new List<ChatSession>();
+		
+		for (var i = 0; i < sessionMatches.Count; i++)
+		{
+			var sessionMatch = sessionMatches[i];
+			var startTimeStr = sessionMatch.Groups[1].Value;
+			var startTime = DateTime.Parse(startTimeStr);
+			
+			var session = new ChatSession
+			{
+				StartTime = startTime
+			};
+			
+			// Determine the content of this session
+			var startIndex = sessionMatch.Index + sessionMatch.Length;
+			var endIndex = (i < sessionMatches.Count - 1) 
+				? sessionMatches[i + 1].Index 
+				: content.Length;
+			
+			var sessionContent = content.Substring(startIndex, endIndex - startIndex);
+			
+			// Parse prompt-response pairs
+			ParsePromptResponsePairs(sessionContent, session);
+			
+			sessions.Add(session);
+		}
+		
+		return sessions;
 	}
 
     [GeneratedRegex(@"# aider chat started at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", RegexOptions.Compiled)]
