@@ -46,7 +46,8 @@ public class FilePathUtilityTests
 		
 		// Assert
 		Assert.That(result, Is.Not.Null);
-		Assert.That(result, Is.EqualTo(testFilePath));
+		// Use Path.GetFullPath to normalize paths for cross-platform compatibility
+		Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(testFilePath)));
 	}
 
 	[Test]
@@ -78,7 +79,8 @@ public class FilePathUtilityTests
 
 		// Assert
 		Assert.That(result, Is.Not.Null);
-		Assert.That(result, Is.EqualTo(monthDir));
+		// Use Path.GetFullPath to normalize paths for cross-platform compatibility
+		Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(monthDir)));
 	}
 
 	[Test]
@@ -110,7 +112,8 @@ public class FilePathUtilityTests
 		// Assert
 		Assert.That(result, Is.Not.Null);
 		Assert.That(Directory.Exists(result), Is.True);
-		Assert.That(result, Is.EqualTo(expectedPath));
+		// Use Path.GetFullPath to normalize paths for cross-platform compatibility
+		Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(expectedPath)));
 	}
 	
 	[Test]
@@ -141,7 +144,8 @@ public class FilePathUtilityTests
 			// Assert
 			Assert.That(result, Is.Not.Null);
 			Assert.That(Directory.Exists(result), Is.True);
-			Assert.That(result, Is.EqualTo(expectedPath));
+			// Use Path.GetFullPath to normalize paths for cross-platform compatibility
+			Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(expectedPath)));
 		}
 		finally
 		{
