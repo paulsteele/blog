@@ -1,4 +1,5 @@
 using LlmHistoryToPost.Services;
+using System.Runtime.InteropServices;
 
 namespace LlmHistoryToPost.Tests.Services;
 
@@ -7,6 +8,20 @@ public class FilePathUtilityTests
 {
 	private string _testDirectory;
 	private string _originalDirectory;
+	
+	// Helper method to normalize paths for comparison on macOS
+	private static bool PathsAreEqual(string path1, string path2)
+	{
+		// Normalize paths to handle macOS /private prefix
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+		{
+			// Remove "/private" prefix if it exists
+			path1 = path1.Replace("/private/var", "/var");
+			path2 = path2.Replace("/private/var", "/var");
+		}
+		
+		return Path.GetFullPath(path1) == Path.GetFullPath(path2);
+	}
 
 	[SetUp]
 	public void Setup()
@@ -46,8 +61,8 @@ public class FilePathUtilityTests
 		
 		// Assert
 		Assert.That(result, Is.Not.Null);
-		// Use Path.GetFullPath to normalize paths for cross-platform compatibility
-		Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(testFilePath)));
+		Assert.That(PathsAreEqual(result!, testFilePath), Is.True, 
+			$"Paths don't match: '{result}' vs '{testFilePath}'");
 	}
 
 	[Test]
@@ -79,8 +94,8 @@ public class FilePathUtilityTests
 
 		// Assert
 		Assert.That(result, Is.Not.Null);
-		// Use Path.GetFullPath to normalize paths for cross-platform compatibility
-		Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(monthDir)));
+		Assert.That(PathsAreEqual(result!, monthDir), Is.True,
+			$"Paths don't match: '{result}' vs '{monthDir}'");
 	}
 
 	[Test]
@@ -112,8 +127,8 @@ public class FilePathUtilityTests
 		// Assert
 		Assert.That(result, Is.Not.Null);
 		Assert.That(Directory.Exists(result), Is.True);
-		// Use Path.GetFullPath to normalize paths for cross-platform compatibility
-		Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(expectedPath)));
+		Assert.That(PathsAreEqual(result!, expectedPath), Is.True,
+			$"Paths don't match: '{result}' vs '{expectedPath}'");
 	}
 	
 	[Test]
@@ -144,8 +159,8 @@ public class FilePathUtilityTests
 			// Assert
 			Assert.That(result, Is.Not.Null);
 			Assert.That(Directory.Exists(result), Is.True);
-			// Use Path.GetFullPath to normalize paths for cross-platform compatibility
-			Assert.That(Path.GetFullPath(result), Is.EqualTo(Path.GetFullPath(expectedPath)));
+			Assert.That(PathsAreEqual(result!, expectedPath), Is.True,
+				$"Paths don't match: '{result}' vs '{expectedPath}'");
 		}
 		finally
 		{
