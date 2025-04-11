@@ -47,10 +47,9 @@ public class BlogPostGenerator
 			sb.AppendLine();
 			sb.AppendLine("{{< details \"**Response:** (click to expand)\" >}}");
 			
-			// Format the response without the blockquote prefix since it's in a shortcode
 			foreach (var line in pair.Response.Split('\n'))
 			{
-				sb.AppendLine(line);
+				sb.AppendLine($"> {line}");
 			}
 			
 			sb.AppendLine("{{< /details >}}");
