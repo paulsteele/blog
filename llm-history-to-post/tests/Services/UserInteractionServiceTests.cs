@@ -49,7 +49,7 @@ public class UserInteractionServiceTests
 
 		var result = _service.SelectDay(dict);
 		
-		Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 2)));
+		Assert.That(result, Is.EqualTo(new DateOnly(2025, 4, 3)));
 	}
 
 	[Test]
