@@ -59,6 +59,9 @@ public class UserInteractionService(IAnsiConsole console)
 			console.MarkupLine("\n[yellow]===== RESPONSE =====[/]");
 			console.WriteLine(pair.Response);
 			
+			// Collect a title for the prompt
+			pair.Title = console.Ask<string>("Enter a title for this prompt:");
+			
 			pair.IsSuccess = console.Confirm("Was this a success?");
 			
 			pair.UserComment = console.Ask<string>("Enter your comment for this verdict:");
