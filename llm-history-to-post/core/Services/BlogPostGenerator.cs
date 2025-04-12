@@ -32,7 +32,12 @@ public class BlogPostGenerator
 		{
 			var pair = selectedPrompts[i];
 			
-			sb.AppendLine($"## Prompt {i + 1}");
+			// Use the user-provided title, or fall back to a default if empty
+			var title = !string.IsNullOrWhiteSpace(pair.Title) 
+				? pair.Title 
+				: $"Prompt {i + 1}";
+				
+			sb.AppendLine($"## {title}");
 			sb.AppendLine();
 			sb.AppendLine("> **Prompt:**");
 			sb.AppendLine(">");
