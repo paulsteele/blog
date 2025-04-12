@@ -8,7 +8,7 @@ public class UserInteractionService(IAnsiConsole console)
 {
 	public DateOnly SelectDay(Dictionary<DateOnly, List<PromptResponsePair>> promptsByDay)
 	{
-		var days = promptsByDay.Keys.OrderBy(d => d).ToList();
+		var days = promptsByDay.Keys.OrderByDescending(d => d).ToList();
 		
 		switch (days.Count)
 		{
