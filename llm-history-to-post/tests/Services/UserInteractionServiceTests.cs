@@ -121,7 +121,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void ShouldSetVerdictAndCommentWhenCollectingVerdicts()
+	public void ShouldSetVerdictAndCommentWhenCollectingPromptMetadata()
 	{
 		// Arrange
 		var selectedPrompts = new List<PromptResponsePair>
@@ -139,7 +139,7 @@ public class UserInteractionServiceTests
 		_testConsole.Input.PushTextWithEnter("This is a bad prompt");
 		
 		// Act
-		_service.CollectVerdicts(selectedPrompts);
+		_service.CollectPromptMetadata(selectedPrompts);
 		
 		// Assert
 		Assert.Multiple(() =>
