@@ -25,6 +25,7 @@ public class BlogPostGeneratorTests
 			{
 				Prompt = "Test prompt 1",
 				Response = "Test response 1",
+				Title = "First Test Prompt",
 				IsSuccess = true,
 				UserComment = "This worked great"
 			},
@@ -33,6 +34,7 @@ public class BlogPostGeneratorTests
 			{
 				Prompt = "Test prompt 2",
 				Response = "Test response 2",
+				Title = "Second Test Prompt",
 				IsSuccess = false,
 				UserComment = "This didn't work"
 			}
@@ -48,8 +50,8 @@ public class BlogPostGeneratorTests
 		Assert.That(result, Does.Contain($"title: \"Hour a Day: AI - Day {_testDayNumber} - \""));
 		Assert.That(result, Does.Contain("date: 2025-04-01T12:00:00+05:00"));
 		Assert.That(result, Does.Contain("## Introduction"));
-		Assert.That(result, Does.Contain("## Prompt 1"));
-		Assert.That(result, Does.Contain("## Prompt 2"));
+		Assert.That(result, Does.Contain("## First Test Prompt"));
+		Assert.That(result, Does.Contain("## Second Test Prompt"));
 		Assert.That(result, Does.Contain("## Conclusion"));
 		Assert.That(result, Does.Contain("✅ This worked great"));
 		Assert.That(result, Does.Contain("❌ This didn't work"));
@@ -80,6 +82,7 @@ public class BlogPostGeneratorTests
 			{
 				Prompt = "Line 1\nLine 2\nLine 3",
 				Response = "Response 1\nResponse 2",
+				Title = "Multiline Test",
 				IsSuccess = true,
 				UserComment = "Comment"
 			}
