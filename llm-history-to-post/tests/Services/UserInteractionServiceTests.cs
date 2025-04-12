@@ -121,7 +121,7 @@ public class UserInteractionServiceTests
 	}
 
 	[Test]
-	public void ShouldSetVerdictAndCommentWhenCollectingPromptMetadata()
+	public void ShouldSetTitleVerdictAndCommentWhenCollectingPromptMetadata()
 	{
 		// Arrange
 		var selectedPrompts = new List<PromptResponsePair>
@@ -130,11 +130,13 @@ public class UserInteractionServiceTests
 			new() { Prompt = "Test prompt 2", Response = "Test response 2" }
 		};
 		
-		// Simulate user selecting "Good" for first prompt with comment
+		// Simulate user entering title, then selecting "Good" for first prompt with comment
+		_testConsole.Input.PushTextWithEnter("First Prompt Title");
 		_testConsole.Input.PushTextWithEnter("Y");
 		_testConsole.Input.PushTextWithEnter("This is a good prompt");
 		
-		// Simulate user selecting "Bad" for second prompt with comment
+		// Simulate user entering title, then selecting "Bad" for second prompt with comment
+		_testConsole.Input.PushTextWithEnter("Second Prompt Title");
 		_testConsole.Input.PushTextWithEnter("N");
 		_testConsole.Input.PushTextWithEnter("This is a bad prompt");
 		
@@ -145,10 +147,12 @@ public class UserInteractionServiceTests
 		Assert.Multiple(() =>
 		{
 			// Check first prompt
+			Assert.That(selectedPrompts[0].Title, Is.EqualTo("First Prompt Title"));
 			Assert.That(selectedPrompts[0].IsSuccess, Is.True);
 			Assert.That(selectedPrompts[0].UserComment, Is.EqualTo("This is a good prompt"));
 			
 			// Check second prompt
+			Assert.That(selectedPrompts[1].Title, Is.EqualTo("Second Prompt Title"));
 			Assert.That(selectedPrompts[1].IsSuccess, Is.False);
 			Assert.That(selectedPrompts[1].UserComment, Is.EqualTo("This is a bad prompt"));
 		});
