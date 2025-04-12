@@ -47,7 +47,7 @@ public class UserInteractionService(IAnsiConsole console)
 		return selectedIndices.Select(i => prompts[i]).ToList();
 	}
 	
-	public void CollectVerdicts(List<PromptResponsePair> selectedPrompts)
+	public void CollectPromptMetadata(List<PromptResponsePair> selectedPrompts)
 	{
 		foreach (var pair in selectedPrompts)
 		{
