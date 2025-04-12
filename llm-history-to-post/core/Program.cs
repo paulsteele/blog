@@ -49,7 +49,7 @@ public static class Program
 			return;
 		}
 		
-		userInteractionService.CollectVerdicts(selectedPrompts);
+		userInteractionService.CollectPromptMetadata(selectedPrompts);
 		
 		var dayNumber = userInteractionService.GetDayNumber();
 		GenerateAndSaveBlogPost(console, selectedPrompts, dayNumber);
