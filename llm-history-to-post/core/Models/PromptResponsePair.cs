@@ -6,6 +6,7 @@ public record PromptResponsePair
 	public string Response { get; init; } = string.Empty;
 	public bool? IsSuccess { get; set; }
 	public string UserComment { get; set; } = string.Empty;
+	public string Title { get; set; } = string.Empty;
 	
 	public string GetPromptPreview(int maxLength = 100)
 	{
