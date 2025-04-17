@@ -3,7 +3,7 @@ namespace LlmHistoryToPost.Services;
 using System.Text;
 using LlmHistoryToPost.Models;
 
-public class BlogPostGenerator
+public partial class BlogPostGenerator
 {
 	public string GenerateBlogPost(
 		DateTimeOffset date, 
@@ -51,11 +51,7 @@ public class BlogPostGenerator
 			foreach (var line in pair.Response.Split('\n'))
 			{
 				// Use regex to replace leading # characters while preserving indentation
-				string processedLine = System.Text.RegularExpressions.Regex.Replace(
-					line, 
-					@"^(\s*)#+\s*", 
-					"$1"
-				);
+				var processedLine = StartOfLineRegex().Replace(line, "$1");
 				
 				sb.AppendLine($"> {processedLine}");
 			}
@@ -90,4 +86,7 @@ public class BlogPostGenerator
 		
 		return Path.Combine(directory, $"{year}-{monthStr}-{day}-hadai-day-{dayNumber}-temp.md");
 	}
+
+    [System.Text.RegularExpressions.GeneratedRegex(@"^(\s*)#+\s*")]
+    private static partial System.Text.RegularExpressions.Regex StartOfLineRegex();
 }
