@@ -120,7 +120,7 @@ public class BlogPostGeneratorTests
 			new()
 			{
 				Prompt = "Test prompt",
-				Response = "# Header 1\nNormal text\n  # Indented header\n   #Multiple hashes\nNo header line",
+				Response = "# Header 1\nNormal text\n  # Indented header\n   #Multiple hashes\nNo header line\n  ##Test#Case",
 				Title = "Markdown Header Test",
 				IsSuccess = true,
 				UserComment = "Testing header removal"
@@ -137,6 +137,7 @@ public class BlogPostGeneratorTests
 		Assert.That(result, Does.Contain(">   Indented header"));  // # removed, indentation preserved
 		Assert.That(result, Does.Contain(">    Multiple hashes"));  // multiple # removed
 		Assert.That(result, Does.Contain("> No header line"));  // unchanged
-		Assert.That(result, Does.Not.Contain("> # "));  // No # characters should remain
+		Assert.That(result, Does.Contain(">   Test#Case"));  // ## at start removed, # in middle preserved
+		Assert.That(result, Does.Not.Contain("> # "));  // No # characters should remain at start of lines
 	}
 }
