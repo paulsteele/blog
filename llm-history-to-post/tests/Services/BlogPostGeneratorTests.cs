@@ -110,4 +110,33 @@ public class BlogPostGeneratorTests
 		Assert.That(result, Is.Not.Null);
 		Assert.That(result, Does.EndWith($"2025-04-01-hadai-day-7-temp.md"));
 	}
+	
+	[Test]
+	public void ShouldRemoveMarkdownHeadersFromResponse()
+	{
+		// Arrange
+		var promptsWithHeaders = new List<PromptResponsePair>
+		{
+			new()
+			{
+				Prompt = "Test prompt",
+				Response = "# Header 1\nNormal text\n  # Indented header\n   #Multiple hashes\nNo header line",
+				Title = "Markdown Header Test",
+				IsSuccess = true,
+				UserComment = "Testing header removal"
+			}
+		};
+
+		// Act
+		var result = _generator.GenerateBlogPost(_testDate, promptsWithHeaders, _testDayNumber);
+
+		// Assert
+		Assert.That(result, Is.Not.Null);
+		Assert.That(result, Does.Contain("> Header 1"));  // # removed
+		Assert.That(result, Does.Contain("> Normal text"));  // unchanged
+		Assert.That(result, Does.Contain(">   Indented header"));  // # removed, indentation preserved
+		Assert.That(result, Does.Contain(">    Multiple hashes"));  // multiple # removed
+		Assert.That(result, Does.Contain("> No header line"));  // unchanged
+		Assert.That(result, Does.Not.Contain("> # "));  // No # characters should remain
+	}
 }
