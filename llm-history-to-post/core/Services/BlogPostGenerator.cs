@@ -50,7 +50,14 @@ public class BlogPostGenerator
 			
 			foreach (var line in pair.Response.Split('\n'))
 			{
-				sb.AppendLine($"> {line}");
+				// Use regex to replace leading # characters while preserving indentation
+				string processedLine = System.Text.RegularExpressions.Regex.Replace(
+					line, 
+					@"^(\s*)#+\s*", 
+					"$1"
+				);
+				
+				sb.AppendLine($"> {processedLine}");
 			}
 			
 			sb.AppendLine("{{< /details >}}");
