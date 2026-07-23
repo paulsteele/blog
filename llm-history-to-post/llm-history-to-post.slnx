@@ -1,7 +1,0 @@
-<Solution>
-  <Configurations>
-    <Platform Name="Any CPU" />
-  </Configurations>
-  <Project Path="core\core.csproj" />
-  <Project Path="tests\tests.csproj" />
-</Solution>
